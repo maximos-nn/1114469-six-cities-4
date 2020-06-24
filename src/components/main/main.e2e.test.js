@@ -1,15 +1,30 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Main from "./main.jsx";
+import {PlaceType} from "../../const";
 
-const PLACES_COUNT = 312;
-const titles = [
-  `Beautiful & luxurious apartment at great location`,
-  `Wood and stone place`,
-  `Canal View Prinsengracht`,
-  `Nice, cozy, warm big bed apartment`,
-  `Wood and stone place`
+const offers = [
+  {
+    id: 10,
+    title: `Beautiful & luxurious apartment at great location`,
+    type: PlaceType.APARTMENT,
+    picture: `apartment-01.jpg`,
+    price: 326,
+    rating: 2.5,
+    isBookmarked: false,
+    isPremium: true
+  },
+  {
+    id: 40,
+    title: `Nice, cozy, warm big bed apartment`,
+    type: PlaceType.APARTMENT,
+    picture: `apartment-03.jpg`,
+    price: 131,
+    rating: 5,
+    isBookmarked: false,
+    isPremium: false
+  }
 ];
 
 Enzyme.configure({adapter: new Adapter()});
@@ -17,13 +32,27 @@ Enzyme.configure({adapter: new Adapter()});
 it(`Place title should be clicked`, () => {
   const onPlaceTitleClick = jest.fn();
 
-  const main = shallow(
-      <Main placesCount={PLACES_COUNT} placesTitles={titles} onPlaceTitleClick={onPlaceTitleClick} />
+  const main = mount(
+      <Main places={offers} onPlaceTitleClick={onPlaceTitleClick} onBookmarkButtonClick={() => {}} />
   );
 
   const placeTitles = main.find(`h2.place-card__name a`);
   placeTitles.forEach((title) => {
     title.simulate(`click`);
   });
-  expect(onPlaceTitleClick).toHaveBeenCalledTimes(titles.length);
+  expect(onPlaceTitleClick).toHaveBeenCalledTimes(offers.length);
+});
+
+it(`Bookmark should be clicked`, () => {
+  const onBookmarkButtonClick = jest.fn();
+
+  const main = mount(
+      <Main places={offers} onPlaceTitleClick={() => {}} onBookmarkButtonClick={onBookmarkButtonClick} />
+  );
+
+  const bookmarks = main.find(`.place-card__bookmark-button`);
+  bookmarks.forEach((title) => {
+    title.simulate(`click`);
+  });
+  expect(onBookmarkButtonClick).toHaveBeenCalledTimes(offers.length);
 });
