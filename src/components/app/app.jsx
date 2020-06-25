@@ -1,20 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {placesListType} from "../prop-types.js";
 import Main from "../main/main.jsx";
 
-const titleClickHandler = () => {};
-
 const App = (props) => {
-  const {placesCount, placesTitles} = props;
+  const {places} = props;
 
   return (
-    <Main placesCount={placesCount} placesTitles={placesTitles} onPlaceTitleClick={titleClickHandler} />
+    <Main places={places} onPlaceTitleClick={() => {}} onBookmarkButtonClick={() => {}} />
   );
 };
 
 App.propTypes = {
-  placesCount: PropTypes.number.isRequired,
-  placesTitles: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  places: placesListType
 };
 
 export default App;

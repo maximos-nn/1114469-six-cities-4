@@ -1,17 +1,32 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import App from "./app.jsx";
+import {PlaceType} from "../../const";
 
-const PLACES_COUNT = 312;
-const titles = [
-  `Beautiful & luxurious apartment at great location`,
-  `Wood and stone place`,
-  `Canal View Prinsengracht`,
-  `Nice, cozy, warm big bed apartment`,
-  `Wood and stone place`
+const offers = [
+  {
+    id: 11,
+    title: `Beautiful & luxurious apartment at great location`,
+    type: PlaceType.APARTMENT,
+    picture: `apartment-01.jpg`,
+    price: 123,
+    rating: 5,
+    isBookmarked: false,
+    isPremium: true
+  },
+  {
+    id: 22,
+    title: `Wood and stone place`,
+    type: PlaceType.ROOM,
+    picture: `room.jpg`,
+    price: 456,
+    rating: 3.6,
+    isBookmarked: true,
+    isPremium: false
+  }
 ];
 
 it(`Render App`, () => {
-  const tree = renderer.create(<App placesCount={PLACES_COUNT} placesTitles={titles} />).toJSON();
+  const tree = renderer.create(<App places={offers} />).toJSON();
   expect(tree).toMatchSnapshot();
 });
