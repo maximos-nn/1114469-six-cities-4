@@ -7,9 +7,38 @@ export default [
     type: PlaceType.APARTMENT,
     picture: `apartment-01.jpg`,
     price: 120,
-    rating: 4,
+    rating: 4.8,
     isBookmarked: false,
-    isPremium: true
+    isPremium: true,
+    guests: 4,
+    bedrooms: 3,
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
+    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.`,
+    amenities: [
+      `Wi-Fi`,
+      `Washing machine`,
+      `Towels`,
+      `Heating`,
+      `Coffee machine`,
+      `Baby seat`,
+      `Kitchen`,
+      `Dishwasher`,
+      `Cabel TV`,
+      `Fridge`
+    ],
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isSuper: true
+    },
+    photos: [
+      `img/room.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-03.jpg`,
+      `img/studio-01.jpg`,
+      `img/apartment-01.jpg`
+    ]
   },
   {
     id: 2,
@@ -19,7 +48,20 @@ export default [
     price: 80,
     rating: 4,
     isBookmarked: true,
-    isPremium: false
+    isPremium: false,
+    guests: 1,
+    bedrooms: 1,
+    description: `Wood and stone place.`,
+    amenities: [],
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isSuper: true
+    },
+    photos: [
+      `img/room.jpg`,
+      `img/studio-01.jpg`
+    ]
   },
   {
     id: 3,
@@ -27,9 +69,33 @@ export default [
     type: PlaceType.APARTMENT,
     picture: `apartment-02.jpg`,
     price: 132,
-    rating: 4,
+    rating: 3.2,
     isBookmarked: false,
-    isPremium: false
+    isPremium: false,
+    guests: 2,
+    bedrooms: 1,
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`,
+    amenities: [
+      `Wi-Fi`,
+      `Coffee machine`,
+      `Kitchen`,
+      `Dishwasher`,
+      `Cabel TV`,
+      `Fridge`
+    ],
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isSuper: true
+    },
+    photos: [
+      `img/room.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-03.jpg`,
+      `img/studio-01.jpg`,
+      `img/apartment-01.jpg`
+    ]
   },
   {
     id: 4,
@@ -39,6 +105,32 @@ export default [
     price: 180,
     rating: 5,
     isBookmarked: false,
-    isPremium: true
+    isPremium: true,
+    guests: 1,
+    bedrooms: 1,
+    description: `An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.`,
+    amenities: [
+      `Wi-Fi`,
+      `Washing machine`,
+      `Towels`,
+      `Coffee machine`,
+      `Kitchen`,
+      `Dishwasher`,
+      `Cabel TV`,
+      `Fridge`
+    ],
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isSuper: true
+    },
+    photos: [
+      `img/room.jpg`,
+      `img/apartment-01.jpg`,
+      `img/apartment-02.jpg`,
+      `img/apartment-03.jpg`,
+      `img/studio-01.jpg`,
+      `img/apartment-01.jpg`
+    ]
   }
 ];

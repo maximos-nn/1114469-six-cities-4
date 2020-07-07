@@ -12,7 +12,23 @@ const offers = [
     price: 235,
     rating: 4,
     isBookmarked: false,
-    isPremium: true
+    isPremium: true,
+    guests: 4,
+    bedrooms: 3,
+    description: `Description.`,
+    amenities: [
+      `Cabel TV`,
+      `Fridge`
+    ],
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isSuper: true
+    },
+    photos: [
+      `img/studio-01.jpg`,
+      `img/apartment-01.jpg`
+    ]
   },
   {
     id: 32,
@@ -22,7 +38,23 @@ const offers = [
     price: 157,
     rating: 3.3,
     isBookmarked: false,
-    isPremium: false
+    isPremium: false,
+    guests: 4,
+    bedrooms: 3,
+    description: `Description.`,
+    amenities: [
+      `Cabel TV`,
+      `Fridge`
+    ],
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isSuper: true
+    },
+    photos: [
+      `img/studio-01.jpg`,
+      `img/apartment-01.jpg`
+    ]
   },
   {
     id: 42,
@@ -32,7 +64,23 @@ const offers = [
     price: 234,
     rating: 5,
     isBookmarked: true,
-    isPremium: true
+    isPremium: true,
+    guests: 4,
+    bedrooms: 3,
+    description: `Description.`,
+    amenities: [
+      `Cabel TV`,
+      `Fridge`
+    ],
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isSuper: true
+    },
+    photos: [
+      `img/studio-01.jpg`,
+      `img/apartment-01.jpg`
+    ]
   }
 ];
 
