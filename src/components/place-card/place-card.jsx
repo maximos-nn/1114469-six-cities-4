@@ -1,15 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {placeCardType} from "../prop-types";
-
-const PERCENTS_PER_RATING_POINT = 20;
+import {calcRatingBarWidth} from "../../utils";
 
 const PlaceCard = (props) => {
   const {card, events} = props;
   const {onCardMouseEnter, onCardMouseLeave, onBookmarkButtonClick, onPlaceTitleClick} = events;
   const {title, type, picture, price, rating, isBookmarked, isPremium} = card;
   const bookmarkActiveStyle = isBookmarked ? `place-card__bookmark-button--active` : ``;
-  const ratingBarWidth = Math.round(rating) * PERCENTS_PER_RATING_POINT;
+  const ratingBarWidth = calcRatingBarWidth(rating);
   return (
     <article
       className="cities__place-card place-card"
@@ -47,7 +46,10 @@ const PlaceCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#" onClick={onPlaceTitleClick}>{title}</a>
+          <a href="#" onClick={(evt) => {
+            evt.preventDefault();
+            onPlaceTitleClick(card);
+          }}>{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

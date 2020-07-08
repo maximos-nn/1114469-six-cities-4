@@ -11,7 +11,23 @@ const card = {
   price: 235,
   rating: 4.2,
   isBookmarked: true,
-  isPremium: true
+  isPremium: true,
+  guests: 4,
+  bedrooms: 3,
+  description: `Description.`,
+  amenities: [
+    `Cabel TV`,
+    `Fridge`
+  ],
+  host: {
+    name: `Angelina`,
+    avatar: `img/avatar-angelina.jpg`,
+    isSuper: true
+  },
+  photos: [
+    `img/studio-01.jpg`,
+    `img/apartment-01.jpg`
+  ]
 };
 
 it(`Should render place card correctly`, () => {
