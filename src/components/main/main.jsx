@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {placesListType} from "../prop-types.js";
+import Map from "../map/map.jsx";
 import PlacesList from "../places-list/places-list.jsx";
 
 const Main = (props) => {
@@ -100,7 +101,7 @@ const Main = (props) => {
               <PlacesList places={places} onPlaceTitleClick={onPlaceTitleClick} onBookmarkButtonClick={onBookmarkButtonClick} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map places={places} />
             </div>
           </div>
         </div>

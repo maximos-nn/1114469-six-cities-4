@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import PlacesList from "./places-list.jsx";
+import Map from "./map.jsx";
 import {PlaceType} from "../../const";
 
 const offers = [
@@ -87,7 +87,10 @@ const offers = [
   }
 ];
 
-it(`Render places list`, () => {
-  const tree = renderer.create(<PlacesList places={offers} onPlaceTitleClick={() => {}} onBookmarkButtonClick={() => {}} />).toJSON();
+it(`Map should render correctly`, () => {
+  const tree = renderer.create(
+      <Map places={offers} />,
+      {createNodeMock: () => document.createElement(`div`)}
+  ).toJSON();
   expect(tree).toMatchSnapshot();
 });

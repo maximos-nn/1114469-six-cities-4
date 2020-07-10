@@ -28,7 +28,8 @@ const card = {
   photos: [
     `img/studio-01.jpg`,
     `img/apartment-01.jpg`
-  ]
+  ],
+  location: [52.3809553943508, 4.939309666406198]
 };
 
 const mockEvent = {

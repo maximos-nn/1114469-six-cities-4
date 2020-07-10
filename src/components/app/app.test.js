@@ -28,7 +28,8 @@ const offers = [
     photos: [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
-    ]
+    ],
+    location: [52.3909553943508, 4.929309666406198]
   },
   {
     id: 22,
@@ -54,11 +55,15 @@ const offers = [
     photos: [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
-    ]
+    ],
+    location: [52.3809553943508, 4.939309666406198]
   }
 ];
 
 it(`Render App`, () => {
-  const tree = renderer.create(<App places={offers} />).toJSON();
+  const tree = renderer.create(
+      <App places={offers} />,
+      {createNodeMock: () => document.createElement(`div`)}
+  ).toJSON();
   expect(tree).toMatchSnapshot();
 });
