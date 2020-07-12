@@ -40,7 +40,8 @@ const card = {
     `img/apartment-03.jpg`,
     `img/studio-01.jpg`,
     `img/apartment-01.jpg`
-  ]
+  ],
+  location: [52.3909553943508, 4.929309666406198]
 };
 
 it(`Should render place card details correctly`, () => {

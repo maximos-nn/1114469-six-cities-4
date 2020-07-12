@@ -29,7 +29,8 @@ const offers = [
     photos: [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
-    ]
+    ],
+    location: [52.369553943508, 4.85309666406198]
   },
   {
     id: 40,
@@ -55,7 +56,8 @@ const offers = [
     photos: [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
-    ]
+    ],
+    location: [52.3909553943508, 4.929309666406198]
   }
 ];
 
