@@ -3,11 +3,14 @@ import renderer from "react-test-renderer";
 import PlaceCard from "./place-card.jsx";
 import {PlaceType} from "../../const";
 
+const CARD_CLASS_NAME = `cities__place-card`;
+const IMAGE_WRAPPER_CLASS_NAME = `cities__image-wrapper`;
+
 const card = {
   id: 14,
   title: `Beautiful & luxurious apartment at great location`,
   type: PlaceType.APARTMENT,
-  picture: `apartment-01.jpg`,
+  picture: `img/apartment-01.jpg`,
   price: 235,
   rating: 4.2,
   isBookmarked: true,
@@ -34,6 +37,8 @@ const card = {
 it(`Should render place card correctly`, () => {
   const tree = renderer.create(
       <PlaceCard
+        cardClass={CARD_CLASS_NAME}
+        imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
         card={card}
         events={{
           onCardMouseEnter: () => {},

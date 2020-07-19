@@ -4,14 +4,14 @@ import {placeCardType} from "../prop-types";
 import {calcRatingBarWidth} from "../../utils";
 
 const PlaceCard = (props) => {
-  const {card, events} = props;
+  const {card, events, cardClass, imageWrapperClass} = props;
   const {onCardMouseEnter, onCardMouseLeave, onBookmarkButtonClick, onPlaceTitleClick} = events;
   const {title, type, picture, price, rating, isBookmarked, isPremium} = card;
   const bookmarkActiveStyle = isBookmarked ? `place-card__bookmark-button--active` : ``;
   const ratingBarWidth = calcRatingBarWidth(rating);
   return (
     <article
-      className="cities__place-card place-card"
+      className={`${cardClass} place-card`}
       onMouseEnter={() => onCardMouseEnter(card)}
       onMouseLeave={() => onCardMouseLeave(card)}
     >
@@ -21,9 +21,9 @@ const PlaceCard = (props) => {
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${imageWrapperClass} place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={`img/${picture}`} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={picture} width="260" height="200" alt="Place image" />
         </a>
       </div>
       <div className="place-card__info">
@@ -64,7 +64,9 @@ PlaceCard.propTypes = {
     onCardMouseLeave: PropTypes.func.isRequired,
     onBookmarkButtonClick: PropTypes.func.isRequired,
     onPlaceTitleClick: PropTypes.func.isRequired
-  }).isRequired
+  }).isRequired,
+  cardClass: PropTypes.string.isRequired,
+  imageWrapperClass: PropTypes.string.isRequired
 };
 
 export default PlaceCard;

@@ -23,6 +23,23 @@ const placeCardType = PropTypes.shape({
   location: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
 }).isRequired;
 
-const placesListType = PropTypes.arrayOf(placeCardType).isRequired;
+const placeListType = PropTypes.arrayOf(placeCardType).isRequired;
 
-export {placeCardType, placesListType};
+const reviewType = PropTypes.shape(
+    {
+      id: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      comment: PropTypes.string.isRequired,
+      user: PropTypes.shape(
+          {
+            name: PropTypes.string.isRequired,
+            avatar: PropTypes.string.isRequired
+          }
+      ).isRequired
+    }
+).isRequired;
+
+const reviewListType = PropTypes.arrayOf(reviewType).isRequired;
+
+export {placeCardType, placeListType, reviewType, reviewListType};

@@ -8,7 +8,7 @@ const offers = [
     id: 11,
     title: `Beautiful & luxurious apartment at great location`,
     type: PlaceType.APARTMENT,
-    picture: `apartment-01.jpg`,
+    picture: `img/apartment-01.jpg`,
     price: 123,
     rating: 5,
     isBookmarked: false,
@@ -35,7 +35,7 @@ const offers = [
     id: 22,
     title: `Wood and stone place`,
     type: PlaceType.ROOM,
-    picture: `room.jpg`,
+    picture: `img/room.jpg`,
     price: 456,
     rating: 3.6,
     isBookmarked: true,
@@ -62,7 +62,7 @@ const offers = [
 
 it(`Render App`, () => {
   const tree = renderer.create(
-      <App places={offers} />,
+      <App places={offers} reviews={[]} />,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();
   expect(tree).toMatchSnapshot();

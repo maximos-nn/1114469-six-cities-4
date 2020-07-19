@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render places list 1`] = `
+exports[`Render nearby place list 1`] = `
 <div
-  className="cities__places-list places__list tabs__content"
+  className="near-places__list places__list"
 >
   <article
-    className="cities__place-card place-card"
+    className="near-places__card place-card"
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
@@ -17,7 +17,7 @@ exports[`Render places list 1`] = `
       </span>
     </div>
     <div
-      className="cities__image-wrapper place-card__image-wrapper"
+      className="near-places__image-wrapper place-card__image-wrapper"
     >
       <a
         href="#"
@@ -26,7 +26,7 @@ exports[`Render places list 1`] = `
           alt="Place image"
           className="place-card__image"
           height="200"
-          src="img/apartment-01.jpg"
+          src="apartment-01.jpg"
           width="260"
         />
       </a>
@@ -110,12 +110,12 @@ exports[`Render places list 1`] = `
     </div>
   </article>
   <article
-    className="cities__place-card place-card"
+    className="near-places__card place-card"
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
     <div
-      className="cities__image-wrapper place-card__image-wrapper"
+      className="near-places__image-wrapper place-card__image-wrapper"
     >
       <a
         href="#"
@@ -124,7 +124,7 @@ exports[`Render places list 1`] = `
           alt="Place image"
           className="place-card__image"
           height="200"
-          src="img/apartment-02.jpg"
+          src="apartment-02.jpg"
           width="260"
         />
       </a>
@@ -208,7 +208,7 @@ exports[`Render places list 1`] = `
     </div>
   </article>
   <article
-    className="cities__place-card place-card"
+    className="near-places__card place-card"
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
@@ -220,7 +220,7 @@ exports[`Render places list 1`] = `
       </span>
     </div>
     <div
-      className="cities__image-wrapper place-card__image-wrapper"
+      className="near-places__image-wrapper place-card__image-wrapper"
     >
       <a
         href="#"
@@ -229,7 +229,7 @@ exports[`Render places list 1`] = `
           alt="Place image"
           className="place-card__image"
           height="200"
-          src="img/apartment-03.jpg"
+          src="apartment-03.jpg"
           width="260"
         />
       </a>
