@@ -1,6 +1,7 @@
 import React, {PureComponent, createRef} from "react";
+import PropTypes from "prop-types";
 import leaflet from "leaflet";
-import {placesListType} from "../prop-types";
+import {placeListType} from "../prop-types";
 
 class Map extends PureComponent {
   constructor(props) {
@@ -39,14 +40,16 @@ class Map extends PureComponent {
   }
 
   render() {
+    const {mapClass} = this.props;
     return (
-      <section ref={this._mapRef} className="cities__map map"></section>
+      <section ref={this._mapRef} className={`${mapClass} map`}></section>
     );
   }
 }
 
 Map.propTypes = {
-  places: placesListType
+  places: placeListType,
+  mapClass: PropTypes.string.isRequired
 };
 
 export default Map;

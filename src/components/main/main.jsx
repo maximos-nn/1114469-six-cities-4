@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {placesListType} from "../prop-types.js";
-import Map from "../map/map.jsx";
-import PlacesList from "../places-list/places-list.jsx";
+import {placeListType} from "../prop-types.js";
+import MainMap from "../main-map/main-map.jsx";
+import MainPlaceList from "../main-place-list/main-place-list.jsx";
 
 const Main = (props) => {
   const {places, onPlaceTitleClick, onBookmarkButtonClick} = props;
@@ -98,10 +98,10 @@ const Main = (props) => {
                 </select>
                 */}
               </form>
-              <PlacesList places={places} onPlaceTitleClick={onPlaceTitleClick} onBookmarkButtonClick={onBookmarkButtonClick} />
+              <MainPlaceList places={places} onPlaceTitleClick={onPlaceTitleClick} onBookmarkButtonClick={onBookmarkButtonClick} />
             </section>
             <div className="cities__right-section">
-              <Map places={places} />
+              <MainMap places={places} />
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  places: placesListType,
+  places: placeListType,
   onPlaceTitleClick: PropTypes.func.isRequired,
   onBookmarkButtonClick: PropTypes.func.isRequired
 };

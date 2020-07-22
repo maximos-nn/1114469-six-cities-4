@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import PlacesList from "./places-list.jsx";
+import NearbyPlaceList from "./nearby-place-list.jsx";
 import {PlaceType} from "../../const";
 
 const offers = [
@@ -87,7 +87,13 @@ const offers = [
   }
 ];
 
-it(`Render places list`, () => {
-  const tree = renderer.create(<PlacesList places={offers} onPlaceTitleClick={() => {}} onBookmarkButtonClick={() => {}} />).toJSON();
+it(`Render nearby place list`, () => {
+  const tree = renderer.create(
+      <NearbyPlaceList
+        places={offers}
+        onPlaceTitleClick={() => {}}
+        onBookmarkButtonClick={() => {}}
+      />
+  ).toJSON();
   expect(tree).toMatchSnapshot();
 });

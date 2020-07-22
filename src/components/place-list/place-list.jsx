@@ -1,9 +1,9 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {placesListType} from "../prop-types";
+import {placeListType} from "../prop-types";
 import PlaceCard from "../place-card/place-card.jsx";
 
-class PlacesList extends PureComponent {
+class PlaceList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {activeCard: null};
@@ -13,9 +13,9 @@ class PlacesList extends PureComponent {
   }
 
   render() {
-    const {places, onPlaceTitleClick, onBookmarkButtonClick} = this.props;
+    const {places, onPlaceTitleClick, onBookmarkButtonClick, listClass, cardClass, imageWrapperClass} = this.props;
     return (
-      <div className="cities__places-list places__list tabs__content">
+      <div className={`${listClass} places__list`}>
         {places.map((card) => {
           return (
             <PlaceCard
@@ -27,6 +27,8 @@ class PlacesList extends PureComponent {
                 onCardMouseEnter: this._handleCardMouseEnter,
                 onCardMouseLeave: this._handleCardMouseLeave
               }}
+              cardClass={cardClass}
+              imageWrapperClass={imageWrapperClass}
             />
           );
         })}
@@ -43,10 +45,13 @@ class PlacesList extends PureComponent {
   }
 }
 
-PlacesList.propTypes = {
-  places: placesListType,
+PlaceList.propTypes = {
+  places: placeListType,
   onPlaceTitleClick: PropTypes.func.isRequired,
-  onBookmarkButtonClick: PropTypes.func.isRequired
+  onBookmarkButtonClick: PropTypes.func.isRequired,
+  listClass: PropTypes.string.isRequired,
+  cardClass: PropTypes.string.isRequired,
+  imageWrapperClass: PropTypes.string.isRequired
 };
 
-export default PlacesList;
+export default PlaceList;

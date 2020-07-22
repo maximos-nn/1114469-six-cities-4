@@ -1,16 +1,18 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Map from "./map.jsx";
+import PlaceList from "./place-list.jsx";
 import {PlaceType} from "../../const";
 
-const MAP_CLASS_NAME = `cities__map`;
+const LIST_CLASS_NAME = `cities__places-list tabs__content`;
+const CARD_CLASS_NAME = `cities__place-card`;
+const IMAGE_WRAPPER_CLASS_NAME = `cities__image-wrapper`;
 
 const offers = [
   {
     id: 12,
     title: `Beautiful & luxurious apartment at great location`,
     type: PlaceType.APARTMENT,
-    picture: `img/apartment-01.jpg`,
+    picture: `apartment-01.jpg`,
     price: 235,
     rating: 4,
     isBookmarked: false,
@@ -37,7 +39,7 @@ const offers = [
     id: 32,
     title: `Canal View Prinsengracht`,
     type: PlaceType.APARTMENT,
-    picture: `img/apartment-02.jpg`,
+    picture: `apartment-02.jpg`,
     price: 157,
     rating: 3.3,
     isBookmarked: false,
@@ -64,7 +66,7 @@ const offers = [
     id: 42,
     title: `Nice, cozy, warm big bed apartment`,
     type: PlaceType.APARTMENT,
-    picture: `img/apartment-03.jpg`,
+    picture: `apartment-03.jpg`,
     price: 234,
     rating: 5,
     isBookmarked: true,
@@ -89,10 +91,16 @@ const offers = [
   }
 ];
 
-it(`Map should render correctly`, () => {
+it(`Render place list`, () => {
   const tree = renderer.create(
-      <Map mapClass={MAP_CLASS_NAME} places={offers} />,
-      {createNodeMock: () => document.createElement(`div`)}
+      <PlaceList
+        cardClass={CARD_CLASS_NAME}
+        imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
+        listClass={LIST_CLASS_NAME}
+        places={offers}
+        onPlaceTitleClick={() => {}}
+        onBookmarkButtonClick={() => {}}
+      />
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
