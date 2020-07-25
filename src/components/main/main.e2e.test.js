@@ -1,8 +1,12 @@
 import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
 import {PlaceType} from "../../const";
+
+const mockStore = configureStore([]);
 
 const offers = [
   {
@@ -30,7 +34,8 @@ const offers = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.369553943508, 4.85309666406198]
+    location: [52.369553943508, 4.85309666406198],
+    city: {name: `Amsterdam`}
   },
   {
     id: 40,
@@ -57,17 +62,24 @@ const offers = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3909553943508, 4.929309666406198]
+    location: [52.3909553943508, 4.929309666406198],
+    city: {name: `Amsterdam`}
   }
 ];
+
+const cityOffers = new Map([[`Amsterdam`, [...offers]]]);
+const currentCity = `Amsterdam`;
 
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Place title should be clicked`, () => {
+  const store = mockStore({currentCity, cityOffers});
   const onPlaceTitleClick = jest.fn();
 
   const main = mount(
-      <Main places={offers} onPlaceTitleClick={onPlaceTitleClick} onBookmarkButtonClick={() => {}} />
+      <Provider store={store} >
+        <Main places={offers} city={`Amsterdam`} onPlaceTitleClick={onPlaceTitleClick} onBookmarkButtonClick={() => {}} />
+      </Provider>
   );
 
   const placeTitles = main.find(`h2.place-card__name a`);
@@ -78,10 +90,13 @@ it(`Place title should be clicked`, () => {
 });
 
 it(`Bookmark should be clicked`, () => {
+  const store = mockStore({currentCity, cityOffers});
   const onBookmarkButtonClick = jest.fn();
 
   const main = mount(
-      <Main places={offers} onPlaceTitleClick={() => {}} onBookmarkButtonClick={onBookmarkButtonClick} />
+      <Provider store={store} >
+        <Main places={offers} city={`Amsterdam`} onPlaceTitleClick={() => {}} onBookmarkButtonClick={onBookmarkButtonClick} />
+      </Provider>
   );
 
   const bookmarks = main.find(`.place-card__bookmark-button`);

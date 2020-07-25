@@ -20,7 +20,10 @@ const placeCardType = PropTypes.shape({
     isSuper: PropTypes.bool.isRequired
   }).isRequired,
   photos: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  location: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired
+  location: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  city: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }).isRequired
 }).isRequired;
 
 const placeListType = PropTypes.arrayOf(placeCardType).isRequired;
