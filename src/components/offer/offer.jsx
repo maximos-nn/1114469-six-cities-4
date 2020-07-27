@@ -1,12 +1,12 @@
 import React from "react";
-// import PropTypes from "prop-types";
 import {placeCardType, reviewListType, placeListType} from "../prop-types";
-import NearbyMap from "../nearby-map/nearby-map.jsx";
+import Map from "../map/map.jsx";
 import NearbyPlaceList from "../nearby-place-list/nearby-place-list.jsx";
 import ReviewList from "../review-list/review-list.jsx";
 import {calcRatingBarWidth} from "../../utils";
 
 const MAX_PHOTOS_COUNT = 6;
+const MAP_CLASS_NAME = `property__map`;
 
 const Offer = (props) => {
   const {card, reviews, nearbyPlaces} = props;
@@ -141,7 +141,7 @@ const Offer = (props) => {
               <ReviewList reviews={reviews} />
             </div>
           </div>
-          <NearbyMap places={nearbyPlaces} />
+          <Map mapClass={MAP_CLASS_NAME} places={nearbyPlaces} />
         </section>
         <div className="container">
           <section className="near-places places">

@@ -41,7 +41,8 @@ const card = {
     `img/studio-01.jpg`,
     `img/apartment-01.jpg`
   ],
-  location: [52.3909553943508, 4.929309666406198]
+  location: [52.3909553943508, 4.929309666406198],
+  city: {name: `Amsterdam`}
 };
 
 const reviews = [
@@ -91,7 +92,8 @@ const nearbyPlaces = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3909553943508, 4.929309666406198]
+    location: [52.3909553943508, 4.929309666406198],
+    city: {name: `Amsterdam`}
   },
   {
     id: 4,
@@ -128,7 +130,8 @@ const nearbyPlaces = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3809553943508, 4.939309666406198]
+    location: [52.3809553943508, 4.939309666406198],
+    city: {name: `Amsterdam`}
   }
 ];
 

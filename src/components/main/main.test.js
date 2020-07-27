@@ -1,7 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
 import {PlaceType} from "../../const";
+
+const mockStore = configureStore([]);
 
 const offers = [
   {
@@ -29,7 +33,8 @@ const offers = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3809553943508, 4.939309666406198]
+    location: [52.3809553943508, 4.939309666406198],
+    city: {name: `Amsterdam`}
   },
   {
     id: 44,
@@ -56,13 +61,20 @@ const offers = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3909553943508, 4.85309666406198]
+    location: [52.3909553943508, 4.85309666406198],
+    city: {name: `Amsterdam`}
   }
 ];
 
+const cityOffers = new Map([[`Amsterdam`, [...offers]]]);
+const currentCity = `Amsterdam`;
+
 it(`Render Main component`, () => {
+  const store = mockStore({currentCity, cityOffers});
   const tree = renderer.create(
-      <Main places={offers} onPlaceTitleClick={() => {}} onBookmarkButtonClick={() => {}} />,
+      <Provider store={store}>
+        <Main places={offers} city={`Amsterdam`} onPlaceTitleClick={() => {}} onBookmarkButtonClick={() => {}} />
+      </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();
   expect(tree).toMatchSnapshot();

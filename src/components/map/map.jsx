@@ -7,16 +7,16 @@ class Map extends PureComponent {
   constructor(props) {
     super(props);
     this._mapRef = createRef();
-  }
-
-  componentDidMount() {
-    const {places} = this.props;
-
-    const city = [52.38333, 4.9];
-    const icon = leaflet.icon({
+    this._map = null;
+    this._markerGroup = null;
+    this._icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
     });
+  }
+
+  componentDidMount() {
+    const city = [52.38333, 4.9];
     const zoom = 12;
 
     const map = leaflet.map(
@@ -28,6 +28,7 @@ class Map extends PureComponent {
           marker: true
         }
     );
+    this._map = map;
     map.setView(city, zoom);
     leaflet.tileLayer(
         `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`,
@@ -36,7 +37,13 @@ class Map extends PureComponent {
         }
     ).addTo(map);
 
-    places.forEach((place) => leaflet.marker(place.location, {icon}).addTo(map));
+    this._markerGroup = leaflet.layerGroup().addTo(map);
+    this._addMarkers();
+  }
+
+  componentDidUpdate() {
+    this._markerGroup.clearLayers();
+    this._addMarkers();
   }
 
   render() {
@@ -44,6 +51,11 @@ class Map extends PureComponent {
     return (
       <section ref={this._mapRef} className={`${mapClass} map`}></section>
     );
+  }
+
+  _addMarkers() {
+    const {places} = this.props;
+    places.forEach((place) => leaflet.marker(place.location, {icon: this._icon}).addTo(this._markerGroup));
   }
 }
 

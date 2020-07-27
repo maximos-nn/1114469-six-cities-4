@@ -1,6 +1,8 @@
 import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import {placeListType, reviewListType} from "../prop-types.js";
+import {connect} from "react-redux";
 import Main from "../main/main.jsx";
 import Offer from "../offer/offer.jsx";
 import nearbyPlaces from "../../mocks/offers";
@@ -42,7 +44,7 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {places, reviews} = this.props;
+    const {places, reviews, city} = this.props;
     const activePlace = this.state.activePlace;
 
     if (activePlace) {
@@ -56,7 +58,7 @@ class App extends PureComponent {
     }
 
     return (
-      <Main places={places} onPlaceTitleClick={this._handlePlaceTitleClick} onBookmarkButtonClick={() => {}} />
+      <Main places={places} city={city} onPlaceTitleClick={this._handlePlaceTitleClick} onBookmarkButtonClick={() => {}} />
     );
   }
 
@@ -67,7 +69,11 @@ class App extends PureComponent {
 
 App.propTypes = {
   places: placeListType,
-  reviews: reviewListType
+  reviews: reviewListType,
+  city: PropTypes.string.isRequired
 };
 
-export default App;
+const mapStateToProps = (state) => ({places: state.cityOffers.get(state.currentCity), city: state.currentCity});
+
+export {App};
+export default connect(mapStateToProps)(App);

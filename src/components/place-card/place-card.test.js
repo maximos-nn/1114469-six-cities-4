@@ -31,7 +31,8 @@ const card = {
     `img/studio-01.jpg`,
     `img/apartment-01.jpg`
   ],
-  location: [52.3809553943508, 4.939309666406198]
+  location: [52.3809553943508, 4.939309666406198],
+  city: {name: `Amsterdam`}
 };
 
 it(`Should render place card correctly`, () => {

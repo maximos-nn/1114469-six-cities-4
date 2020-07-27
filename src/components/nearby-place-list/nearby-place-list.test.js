@@ -29,7 +29,8 @@ const offers = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3909553943508, 4.85309666406198]
+    location: [52.3909553943508, 4.85309666406198],
+    city: {name: `Amsterdam`}
   },
   {
     id: 32,
@@ -56,7 +57,8 @@ const offers = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.369553943508, 4.85309666406198]
+    location: [52.369553943508, 4.85309666406198],
+    city: {name: `Amsterdam`}
   },
   {
     id: 42,
@@ -83,7 +85,8 @@ const offers = [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3909553943508, 4.929309666406198]
+    location: [52.3909553943508, 4.929309666406198],
+    city: {name: `Amsterdam`}
   }
 ];
 
