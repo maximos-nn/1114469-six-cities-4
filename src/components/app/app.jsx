@@ -73,7 +73,7 @@ App.propTypes = {
   city: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => ({places: state.cityOffers.get(state.currentCity), city: state.currentCity});
+const mapStateToProps = (state) => ({places: state.cityOffers.get(state.currentCity.name), city: state.currentCity.name});
 
 export {App};
 export default connect(mapStateToProps)(App);

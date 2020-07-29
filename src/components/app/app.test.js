@@ -67,7 +67,7 @@ const offers = [
 ];
 
 const cityOffers = new Map([[`Amsterdam`, [...offers]]]);
-const currentCity = `Amsterdam`;
+const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
 
 it(`Render App`, () => {
   const store = mockStore({currentCity, cityOffers});

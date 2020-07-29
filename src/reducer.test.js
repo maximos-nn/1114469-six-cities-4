@@ -3,7 +3,7 @@ import {reducer, ActionType, ActionCreator} from "./reducer";
 describe(`Reducer should work correctly`, () => {
   it(`Reducer without parameters should return initial state`, () => {
     expect(reducer(void 0, {})).toEqual({
-      currentCity: ``,
+      currentCity: {},
       cityOffers: new Map()
     });
   });
@@ -11,7 +11,7 @@ describe(`Reducer should work correctly`, () => {
   it(`Loading empty offer list with no state should return initial state`, () => {
     expect(reducer(void 0, {type: ActionType.LOAD_OFFERS, payload: []}))
     .toEqual({
-      currentCity: ``,
+      currentCity: {},
       cityOffers: new Map()
     });
   });
@@ -29,7 +29,7 @@ describe(`Reducer should work correctly`, () => {
         }
     ))
     .toEqual({
-      currentCity: `Amsterdam`,
+      currentCity: {name: `Amsterdam`},
       cityOffers: new Map()
         .set(`Amsterdam`, [{city: {name: `Amsterdam`}}, {city: {name: `Amsterdam`}}])
         .set(`Paris`, [{city: {name: `Paris`}}])
@@ -37,7 +37,7 @@ describe(`Reducer should work correctly`, () => {
 
     expect(reducer(
         {
-          currentCity: `Hamburg`,
+          currentCity: {name: `Hamburg`},
           cityOffers: new Map()
             .set(`Hamburg`, [{city: {name: `Hamburg`}}])
             .set(`Brussels`, [{city: {name: `Brussels`}}])
@@ -52,7 +52,7 @@ describe(`Reducer should work correctly`, () => {
         }
     ))
     .toEqual({
-      currentCity: `Amsterdam`,
+      currentCity: {name: `Amsterdam`},
       cityOffers: new Map()
         .set(`Amsterdam`, [{city: {name: `Amsterdam`}}, {city: {name: `Amsterdam`}}])
         .set(`Paris`, [{city: {name: `Paris`}}])
@@ -62,7 +62,7 @@ describe(`Reducer should work correctly`, () => {
   it(`Reducer should return correct state after city change`, () => {
     expect(reducer(
         {
-          currentCity: `Hamburg`,
+          currentCity: {name: `Hamburg`},
           cityOffers: new Map()
             .set(`Hamburg`, [{city: {name: `Hamburg`}}])
             .set(`Brussels`, [{city: {name: `Brussels`}}])
@@ -73,7 +73,7 @@ describe(`Reducer should work correctly`, () => {
         }
     ))
     .toEqual({
-      currentCity: `Hamburg`,
+      currentCity: {name: `Hamburg`},
       cityOffers: new Map()
         .set(`Hamburg`, [{city: {name: `Hamburg`}}])
         .set(`Brussels`, [{city: {name: `Brussels`}}])
@@ -81,7 +81,7 @@ describe(`Reducer should work correctly`, () => {
 
     expect(reducer(
         {
-          currentCity: `Hamburg`,
+          currentCity: {name: `Hamburg`},
           cityOffers: new Map()
             .set(`Hamburg`, [{city: {name: `Hamburg`}}])
             .set(`Brussels`, [{city: {name: `Brussels`}}])
@@ -92,7 +92,7 @@ describe(`Reducer should work correctly`, () => {
         }
     ))
     .toEqual({
-      currentCity: `Brussels`,
+      currentCity: {name: `Brussels`},
       cityOffers: new Map()
         .set(`Hamburg`, [{city: {name: `Hamburg`}}])
         .set(`Brussels`, [{city: {name: `Brussels`}}])

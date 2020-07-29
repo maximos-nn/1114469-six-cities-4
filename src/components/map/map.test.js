@@ -1,8 +1,12 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Map from "./map.jsx";
 
 const MAP_CLASS_NAME = `cities__map`;
+
+const mockStore = configureStore([]);
 
 const markers = [
   {
@@ -19,9 +23,14 @@ const markers = [
   }
 ];
 
+const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
+
 it(`Map should render correctly`, () => {
+  const store = mockStore({currentCity});
   const tree = renderer.create(
-      <Map mapClass={MAP_CLASS_NAME} markers={markers} />,
+      <Provider store={store} >
+        <Map mapClass={MAP_CLASS_NAME} markers={markers} />
+      </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();
   expect(tree).toMatchSnapshot();

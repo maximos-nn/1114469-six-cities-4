@@ -1,7 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Offer from "./offer.jsx";
 import {PlaceType} from "../../const";
+
+const mockStore = configureStore([]);
 
 const card = {
   id: 1,
@@ -93,7 +97,7 @@ const nearbyPlaces = [
       `img/apartment-01.jpg`
     ],
     location: [52.3909553943508, 4.929309666406198],
-    city: {name: `Amsterdam`}
+    city: {name: `Amsterdam`, location: [52.37454, 4.897976]}
   },
   {
     id: 4,
@@ -131,13 +135,18 @@ const nearbyPlaces = [
       `img/apartment-01.jpg`
     ],
     location: [52.3809553943508, 4.939309666406198],
-    city: {name: `Amsterdam`}
+    city: {name: `Amsterdam`, location: [52.37454, 4.897976]}
   }
 ];
 
+const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
+
 it(`Should render place card details correctly`, () => {
+  const store = mockStore({currentCity});
   const tree = renderer.create(
-      <Offer card={card} reviews={reviews} nearbyPlaces={nearbyPlaces} />,
+      <Provider store={store} >
+        <Offer card={card} reviews={reviews} nearbyPlaces={nearbyPlaces} />
+      </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();
   expect(tree).toMatchSnapshot();

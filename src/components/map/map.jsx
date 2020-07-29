@@ -1,13 +1,18 @@
 import React, {PureComponent, createRef} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
+
+const DEFAULT_ZOOM = 12;
 
 class Map extends PureComponent {
   constructor(props) {
     super(props);
+
     this._mapRef = createRef();
     this._map = null;
     this._markerGroup = null;
+
     this._icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
       iconSize: [30, 30]
@@ -19,20 +24,19 @@ class Map extends PureComponent {
   }
 
   componentDidMount() {
-    const city = [52.38333, 4.9];
-    const zoom = 12;
+    const {location, zoom} = this.props;
 
     const map = leaflet.map(
         this._mapRef.current,
         {
-          center: city,
+          center: location,
           zoom,
           zoomControl: false,
           marker: true
         }
     );
     this._map = map;
-    map.setView(city, zoom);
+    map.setView(location, zoom);
     leaflet.tileLayer(
         `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`,
         {
@@ -50,7 +54,10 @@ class Map extends PureComponent {
     this._markerGroup = null;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.location !== this.props.location) {
+      this._map.flyTo(this.props.location);
+    }
     this._markerGroup.clearLayers();
     this._addMarkers();
   }
@@ -75,7 +82,15 @@ Map.propTypes = {
         active: PropTypes.bool.isRequired
       }).isRequired
   ).isRequired,
-  mapClass: PropTypes.string.isRequired
+  mapClass: PropTypes.string.isRequired,
+  location: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  zoom: PropTypes.number.isRequired
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  location: state.currentCity.location,
+  zoom: state.currentCity.zoom || DEFAULT_ZOOM
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);
