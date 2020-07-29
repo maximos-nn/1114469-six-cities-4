@@ -2,6 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import Map from "./map.jsx";
 import {PlaceType} from "../../const";
+import {getLocations} from "../../utils";
 
 const MAP_CLASS_NAME = `cities__map`;
 
@@ -94,7 +95,7 @@ const offers = [
 
 it(`Map should render correctly`, () => {
   const tree = renderer.create(
-      <Map mapClass={MAP_CLASS_NAME} places={offers} />,
+      <Map mapClass={MAP_CLASS_NAME} markers={getLocations(offers, null)} />,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();
   expect(tree).toMatchSnapshot();

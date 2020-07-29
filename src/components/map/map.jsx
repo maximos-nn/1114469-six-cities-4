@@ -1,7 +1,6 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
-import {placeListType} from "../prop-types";
 
 class Map extends PureComponent {
   constructor(props) {
@@ -11,6 +10,10 @@ class Map extends PureComponent {
     this._markerGroup = null;
     this._icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
+      iconSize: [30, 30]
+    });
+    this._activeIcon = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
       iconSize: [30, 30]
     });
   }
@@ -41,6 +44,12 @@ class Map extends PureComponent {
     this._addMarkers();
   }
 
+  componentWillUnmount() {
+    this._map.remove();
+    this._map = null;
+    this._markerGroup = null;
+  }
+
   componentDidUpdate() {
     this._markerGroup.clearLayers();
     this._addMarkers();
@@ -54,13 +63,18 @@ class Map extends PureComponent {
   }
 
   _addMarkers() {
-    const {places} = this.props;
-    places.forEach((place) => leaflet.marker(place.location, {icon: this._icon}).addTo(this._markerGroup));
+    const {markers} = this.props;
+    markers.forEach((marker) => leaflet.marker(marker.location, {icon: marker.active ? this._activeIcon : this._icon}).addTo(this._markerGroup));
   }
 }
 
 Map.propTypes = {
-  places: placeListType,
+  markers: PropTypes.arrayOf(
+      PropTypes.shape({
+        location: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+        active: PropTypes.bool.isRequired
+      }).isRequired
+  ).isRequired,
   mapClass: PropTypes.string.isRequired
 };
 

@@ -7,4 +7,11 @@ const PlaceType = {
   HOTEL: `Hotel`
 };
 
-export {PERCENTS_PER_RATING_POINT, PlaceType};
+const SortType = {
+  POPULAR: `Popular`,
+  PRICE_TO_HIGH: `Price: low to high`,
+  PRICE_TO_LOW: `Price: high to low`,
+  TOP_RATED: `Top rated first`
+};
+
+export {PERCENTS_PER_RATING_POINT, PlaceType, SortType};
