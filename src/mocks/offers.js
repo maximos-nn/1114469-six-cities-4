@@ -40,7 +40,7 @@ export default [
       `img/apartment-01.jpg`
     ],
     location: [52.3909553943508, 4.85309666406198],
-    city: {name: `Amsterdam`}
+    city: {name: `Amsterdam`, location: [52.37454, 4.897976]}
   },
   {
     id: 2,
@@ -65,7 +65,7 @@ export default [
       `img/studio-01.jpg`
     ],
     location: [52.369553943508, 4.85309666406198],
-    city: {name: `Amsterdam`}
+    city: {name: `Amsterdam`, location: [52.37454, 4.897976]}
   },
   {
     id: 3,
@@ -101,7 +101,7 @@ export default [
       `img/apartment-01.jpg`
     ],
     location: [52.3909553943508, 4.929309666406198],
-    city: {name: `Amsterdam`}
+    city: {name: `Amsterdam`, location: [52.37454, 4.897976]}
   },
   {
     id: 4,
@@ -139,7 +139,7 @@ export default [
       `img/apartment-01.jpg`
     ],
     location: [52.3809553943508, 4.939309666406198],
-    city: {name: `Amsterdam`}
+    city: {name: `Amsterdam`, location: [52.37454, 4.897976]}
   },
   {
     id: 5,
@@ -179,8 +179,8 @@ export default [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3909553943508, 4.85309666406198],
-    city: {name: `Paris`}
+    location: [48.84761, 2.356499],
+    city: {name: `Paris`, location: [48.85661, 2.351499]}
   },
   {
     id: 6,
@@ -204,8 +204,8 @@ export default [
       `img/room.jpg`,
       `img/studio-01.jpg`
     ],
-    location: [52.369553943508, 4.85309666406198],
-    city: {name: `Hamburg`}
+    location: [53.534341000000005, 9.998654],
+    city: {name: `Hamburg`, location: [53.550341, 10.000654]}
   },
   {
     id: 7,
@@ -240,8 +240,8 @@ export default [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3909553943508, 4.929309666406198],
-    city: {name: `Brussels`}
+    location: [50.827557, 4.336697],
+    city: {name: `Brussels`, location: [50.846557, 4.351697]}
   },
   {
     id: 8,
@@ -278,7 +278,7 @@ export default [
       `img/studio-01.jpg`,
       `img/apartment-01.jpg`
     ],
-    location: [52.3809553943508, 4.939309666406198],
-    city: {name: `Hamburg`}
+    location: [53.573341000000006, 10.025654000000001],
+    city: {name: `Hamburg`, location: [53.550341, 10.000654]}
   }
 ];

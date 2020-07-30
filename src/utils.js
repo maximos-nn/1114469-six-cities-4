@@ -4,4 +4,8 @@ const calcRatingBarWidth = (rating) => Math.round(rating) * PERCENTS_PER_RATING_
 
 const formatDate = (dateString) => new Date(dateString).toLocaleDateString(`en`, {month: `long`, year: `numeric`});
 
-export {calcRatingBarWidth, formatDate};
+const getComponentDisplayName = (component) => component.displayName || component.name || `Component`;
+
+const getLocations = (places, activePlace) => places.map((place) => ({location: place.location, active: place === activePlace}));
+
+export {calcRatingBarWidth, formatDate, getComponentDisplayName, getLocations};

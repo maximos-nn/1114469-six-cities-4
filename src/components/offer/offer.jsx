@@ -3,7 +3,7 @@ import {placeCardType, reviewListType, placeListType} from "../prop-types";
 import Map from "../map/map.jsx";
 import NearbyPlaceList from "../nearby-place-list/nearby-place-list.jsx";
 import ReviewList from "../review-list/review-list.jsx";
-import {calcRatingBarWidth} from "../../utils";
+import {calcRatingBarWidth, getLocations} from "../../utils";
 
 const MAX_PHOTOS_COUNT = 6;
 const MAP_CLASS_NAME = `property__map`;
@@ -27,6 +27,7 @@ const Offer = (props) => {
   const bookmarkActiveStyle = isBookmarked ? `property__bookmark-button--active` : ``;
   const ratingBarWidth = calcRatingBarWidth(rating);
   const hostProStyle = host.isSuper ? `property__avatar-wrapper--pro` : ``;
+  const markers = getLocations([...nearbyPlaces, card], card);
 
   return (
     <div className="page">
@@ -141,7 +142,7 @@ const Offer = (props) => {
               <ReviewList reviews={reviews} />
             </div>
           </div>
-          <Map mapClass={MAP_CLASS_NAME} places={nearbyPlaces} />
+          <Map mapClass={MAP_CLASS_NAME} markers={markers} />
         </section>
         <div className="container">
           <section className="near-places places">

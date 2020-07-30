@@ -1,100 +1,36 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Map from "./map.jsx";
-import {PlaceType} from "../../const";
 
 const MAP_CLASS_NAME = `cities__map`;
 
-const offers = [
+const mockStore = configureStore([]);
+
+const markers = [
   {
-    id: 12,
-    title: `Beautiful & luxurious apartment at great location`,
-    type: PlaceType.APARTMENT,
-    picture: `img/apartment-01.jpg`,
-    price: 235,
-    rating: 4,
-    isBookmarked: false,
-    isPremium: true,
-    guests: 4,
-    bedrooms: 3,
-    description: `Description.`,
-    amenities: [
-      `Cabel TV`,
-      `Fridge`
-    ],
-    host: {
-      name: `Angelina`,
-      avatar: `img/avatar-angelina.jpg`,
-      isSuper: true
-    },
-    photos: [
-      `img/studio-01.jpg`,
-      `img/apartment-01.jpg`
-    ],
     location: [52.3909553943508, 4.85309666406198],
-    city: {name: `Amsterdam`}
+    active: false
   },
   {
-    id: 32,
-    title: `Canal View Prinsengracht`,
-    type: PlaceType.APARTMENT,
-    picture: `img/apartment-02.jpg`,
-    price: 157,
-    rating: 3.3,
-    isBookmarked: false,
-    isPremium: false,
-    guests: 4,
-    bedrooms: 3,
-    description: `Description.`,
-    amenities: [
-      `Cabel TV`,
-      `Fridge`
-    ],
-    host: {
-      name: `Angelina`,
-      avatar: `img/avatar-angelina.jpg`,
-      isSuper: true
-    },
-    photos: [
-      `img/studio-01.jpg`,
-      `img/apartment-01.jpg`
-    ],
     location: [52.369553943508, 4.85309666406198],
-    city: {name: `Amsterdam`}
+    active: false
   },
   {
-    id: 42,
-    title: `Nice, cozy, warm big bed apartment`,
-    type: PlaceType.APARTMENT,
-    picture: `img/apartment-03.jpg`,
-    price: 234,
-    rating: 5,
-    isBookmarked: true,
-    isPremium: true,
-    guests: 4,
-    bedrooms: 3,
-    description: `Description.`,
-    amenities: [
-      `Cabel TV`,
-      `Fridge`
-    ],
-    host: {
-      name: `Angelina`,
-      avatar: `img/avatar-angelina.jpg`,
-      isSuper: true
-    },
-    photos: [
-      `img/studio-01.jpg`,
-      `img/apartment-01.jpg`
-    ],
     location: [52.3909553943508, 4.929309666406198],
-    city: {name: `Amsterdam`}
+    active: false
   }
 ];
 
+const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
+
 it(`Map should render correctly`, () => {
+  const store = mockStore({currentCity});
   const tree = renderer.create(
-      <Map mapClass={MAP_CLASS_NAME} places={offers} />,
+      <Provider store={store} >
+        <Map mapClass={MAP_CLASS_NAME} markers={markers} />
+      </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();
   expect(tree).toMatchSnapshot();

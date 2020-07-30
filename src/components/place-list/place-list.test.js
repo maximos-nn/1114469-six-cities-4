@@ -101,8 +101,12 @@ it(`Render place list`, () => {
         imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
         listClass={LIST_CLASS_NAME}
         places={offers}
-        onPlaceTitleClick={() => {}}
-        onBookmarkButtonClick={() => {}}
+        events={{
+          onCardMouseEnter: () => {},
+          onCardMouseLeave: () => {},
+          onPlaceTitleClick: () => {},
+          onBookmarkButtonClick: () => {}
+        }}
       />
   ).toJSON();
   expect(tree).toMatchSnapshot();

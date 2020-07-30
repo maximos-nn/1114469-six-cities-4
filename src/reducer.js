@@ -1,5 +1,5 @@
 const initialState = {
-  currentCity: ``,
+  currentCity: {},
   cityOffers: new Map()
 };
 
@@ -26,7 +26,7 @@ const mapOfferToCity = (result, offer) => {
 
 const loadOffers = (offers) => {
   const cityOffers = offers.reduce(mapOfferToCity, new Map());
-  const currentCity = offers[0] && offers[0].city.name || ``;
+  const currentCity = offers[0] && offers[0].city || {};
   return {currentCity, cityOffers};
 };
 
@@ -36,10 +36,11 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, loadOffers(action.payload));
 
     case ActionType.CHANGE_CITY:
-      const currentCity = action.payload;
-      if (!state.cityOffers.has(currentCity)) {
+      const cityName = action.payload;
+      if (!state.cityOffers.has(cityName)) {
         return state;
       }
+      const currentCity = state.cityOffers.get(cityName)[0].city;
       return Object.assign({}, state, {currentCity});
 
     default:

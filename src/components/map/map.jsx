@@ -1,35 +1,42 @@
 import React, {PureComponent, createRef} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
-import {placeListType} from "../prop-types";
+
+const DEFAULT_ZOOM = 12;
 
 class Map extends PureComponent {
   constructor(props) {
     super(props);
+
     this._mapRef = createRef();
     this._map = null;
     this._markerGroup = null;
+
     this._icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
+      iconSize: [30, 30]
+    });
+    this._activeIcon = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
       iconSize: [30, 30]
     });
   }
 
   componentDidMount() {
-    const city = [52.38333, 4.9];
-    const zoom = 12;
+    const {location, zoom} = this.props;
 
     const map = leaflet.map(
         this._mapRef.current,
         {
-          center: city,
+          center: location,
           zoom,
           zoomControl: false,
           marker: true
         }
     );
     this._map = map;
-    map.setView(city, zoom);
+    map.setView(location, zoom);
     leaflet.tileLayer(
         `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`,
         {
@@ -41,7 +48,16 @@ class Map extends PureComponent {
     this._addMarkers();
   }
 
-  componentDidUpdate() {
+  componentWillUnmount() {
+    this._map.remove();
+    this._map = null;
+    this._markerGroup = null;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.location !== this.props.location) {
+      this._map.flyTo(this.props.location);
+    }
     this._markerGroup.clearLayers();
     this._addMarkers();
   }
@@ -54,14 +70,27 @@ class Map extends PureComponent {
   }
 
   _addMarkers() {
-    const {places} = this.props;
-    places.forEach((place) => leaflet.marker(place.location, {icon: this._icon}).addTo(this._markerGroup));
+    const {markers} = this.props;
+    markers.forEach((marker) => leaflet.marker(marker.location, {icon: marker.active ? this._activeIcon : this._icon}).addTo(this._markerGroup));
   }
 }
 
 Map.propTypes = {
-  places: placeListType,
-  mapClass: PropTypes.string.isRequired
+  markers: PropTypes.arrayOf(
+      PropTypes.shape({
+        location: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+        active: PropTypes.bool.isRequired
+      }).isRequired
+  ).isRequired,
+  mapClass: PropTypes.string.isRequired,
+  location: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  zoom: PropTypes.number.isRequired
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  location: state.currentCity.location,
+  zoom: state.currentCity.zoom || DEFAULT_ZOOM
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);

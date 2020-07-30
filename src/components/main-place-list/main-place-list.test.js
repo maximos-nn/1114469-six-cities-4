@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import MainPlaceList from "./main-place-list.jsx";
-import {PlaceType} from "../../const";
+import {PlaceType, SortType} from "../../const";
 
 const offers = [
   {
@@ -94,8 +94,13 @@ it(`Render main place list`, () => {
   const tree = renderer.create(
       <MainPlaceList
         places={offers}
-        onPlaceTitleClick={() => {}}
-        onBookmarkButtonClick={() => {}}
+        sortType={SortType.POPULAR}
+        events={{
+          onCardMouseEnter: () => {},
+          onCardMouseLeave: () => {},
+          onPlaceTitleClick: () => {},
+          onBookmarkButtonClick: () => {}
+        }}
       />
   ).toJSON();
   expect(tree).toMatchSnapshot();
