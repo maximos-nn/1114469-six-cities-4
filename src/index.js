@@ -4,7 +4,6 @@ import {createStore} from "redux";
 import {Provider} from "react-redux";
 import App from "./components/app/app.jsx";
 import placeOffers from "./mocks/offers";
-import reviews from "./mocks/reviews";
 import {reducer, ActionCreator} from "./reducer";
 
 const store = createStore(
@@ -16,7 +15,7 @@ store.dispatch(ActionCreator.loadOffers(placeOffers));
 
 ReactDOM.render(
     <Provider store={store}>
-      <App reviews={reviews} />
+      <App />
     </Provider>,
     document.querySelector(`#root`)
 );

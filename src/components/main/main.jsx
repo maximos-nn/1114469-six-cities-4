@@ -1,13 +1,12 @@
 import React, {PureComponent} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {placeListType} from "../prop-types.js";
+import {placeListType, placeCardType} from "../prop-types.js";
 import Map from "../map/map.jsx";
 import MainPlaceList from "../main-place-list/main-place-list.jsx";
 import CityList from "../city-list/city-list.jsx";
 import NoPlaces from "../no-places/no-places.jsx";
 import Sort from "../sort/sort.jsx";
-import {SortType} from "../../const.js";
-import {getLocations} from "../../utils";
 import withToggle from "../../hocs/with-toggle/with-toggle.js";
 
 const MAP_CLASS_NAME = `cities__map`;
@@ -18,13 +17,6 @@ class Main extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      activeSortType: SortType.POPULAR,
-      activeCard: null
-    };
-    this._sortCaptions = Object.values(SortType);
-
-    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
     this._handleCardMouseEnter = this._handleCardMouseEnter.bind(this);
     this._handleCardMouseLeave = this._handleCardMouseLeave.bind(this);
 
@@ -38,9 +30,8 @@ class Main extends PureComponent {
   }
 
   render() {
-    const {places, city} = this.props;
+    const {places, city, activeItem} = this.props;
     const count = places.length || ``;
-    const markers = getLocations(places, this.state.activeCard);
 
     return (
       <div className="page page--gray page--main">
@@ -78,15 +69,9 @@ class Main extends PureComponent {
                 count ?
                   <section className="cities__places places">
                     <h2 className="visually-hidden">Places</h2>
-                    <b className="places__found">{`${count} places to stay in ${city}`}</b>
-                    <SortWithToggle
-                      types={this._sortCaptions}
-                      activeType={this.state.activeSortType}
-                      onTypeChange={this._handleSortTypeChange}
-                    />
+                    <b className="places__found">{`${count} place${count === 1 ? `` : `s`} to stay in ${city}`}</b>
+                    <SortWithToggle />
                     <MainPlaceList
-                      places={places}
-                      sortType={this.state.activeSortType}
                       events={this._cardEvents}
                     />
                   </section>
@@ -95,7 +80,7 @@ class Main extends PureComponent {
               <div className="cities__right-section">
                 {
                   count &&
-                  <Map mapClass={MAP_CLASS_NAME} markers={markers} />
+                  <Map mapClass={MAP_CLASS_NAME} activeItem={activeItem} />
                 }
               </div>
             </div>
@@ -105,16 +90,12 @@ class Main extends PureComponent {
     );
   }
 
-  _handleSortTypeChange(type) {
-    this.setState({activeSortType: type});
-  }
-
   _handleCardMouseEnter(card) {
-    this.setState({activeCard: card});
+    this.props.onActiveItemChange(card);
   }
 
   _handleCardMouseLeave() {
-    this.setState({activeCard: null});
+    this.props.onActiveItemChange(null);
   }
 }
 
@@ -122,7 +103,10 @@ Main.propTypes = {
   places: placeListType,
   city: PropTypes.string.isRequired,
   onPlaceTitleClick: PropTypes.func.isRequired,
-  onBookmarkButtonClick: PropTypes.func.isRequired
+  onBookmarkButtonClick: PropTypes.func.isRequired,
+  activeItem: PropTypes.oneOfType([placeCardType]),
+  onActiveItemChange: PropTypes.func.isRequired
 };
 
-export default Main;
+export {Main};
+export default connect()(Main);

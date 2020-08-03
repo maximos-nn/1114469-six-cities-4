@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MainPlaceList from "./main-place-list.jsx";
+import {MainPlaceList} from "./main-place-list.jsx";
 import {PlaceType, SortType} from "../../const";
 
 const offers = [

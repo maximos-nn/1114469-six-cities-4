@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {connect} from "react-redux";
 import PlaceList from "../place-list/place-list.jsx";
 import {SortType} from "../../const.js";
-import {placeListType} from "../prop-types.js";
+import {getCurrentPlaces} from "../../utils.js";
 
 const LIST_CLASS_NAME = `cities__places-list tabs__content`;
 const CARD_CLASS_NAME = `cities__place-card`;
@@ -22,25 +22,19 @@ const sortPlaces = (places, sortType) => {
 };
 
 const MainPlaceList = (props) => {
-  const {places, sortType} = props;
-  const sortedPlaces = sortPlaces(places, sortType);
-  const forwardedProps = Object.assign({}, props);
-  delete forwardedProps.places;
-  delete forwardedProps.sortType;
   return (
     <PlaceList
       cardClass={CARD_CLASS_NAME}
       imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
       listClass={LIST_CLASS_NAME}
-      places={sortedPlaces}
-      {...forwardedProps}
+      {...props}
     />
   );
 };
 
-MainPlaceList.propTypes = {
-  places: placeListType,
-  sortType: PropTypes.string.isRequired
-};
+const mapStateToProps = (state) => ({
+  places: sortPlaces(getCurrentPlaces(state), state.currentSortType)
+});
 
-export default MainPlaceList;
+export {MainPlaceList};
+export default connect(mapStateToProps)(MainPlaceList);
