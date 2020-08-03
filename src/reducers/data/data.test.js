@@ -1,20 +1,10 @@
-import {reducer, ActionType, ActionCreator} from "./reducer";
-
-const sortTypes = [
-  `Popular`,
-  `Price: low to high`,
-  `Price: high to low`,
-  `Top rated first`
-];
+import {reducer, ActionType, ActionCreator} from "./data";
 
 describe(`Reducer should work correctly`, () => {
   it(`Reducer without parameters should return initial state`, () => {
     expect(reducer(void 0, {})).toEqual({
       currentCity: {},
-      cityOffers: new Map(),
-      sortTypes,
-      currentSortType: `Popular`,
-      currentPlace: null
+      cityOffers: new Map()
     });
   });
 
@@ -22,10 +12,7 @@ describe(`Reducer should work correctly`, () => {
     expect(reducer(void 0, {type: ActionType.LOAD_OFFERS, payload: []}))
     .toEqual({
       currentCity: {},
-      cityOffers: new Map(),
-      sortTypes,
-      currentSortType: `Popular`,
-      currentPlace: null
+      cityOffers: new Map()
     });
   });
 
@@ -45,10 +32,7 @@ describe(`Reducer should work correctly`, () => {
       currentCity: {name: `Amsterdam`},
       cityOffers: new Map()
         .set(`Amsterdam`, [{city: {name: `Amsterdam`}}, {city: {name: `Amsterdam`}}])
-        .set(`Paris`, [{city: {name: `Paris`}}]),
-      sortTypes,
-      currentSortType: `Popular`,
-      currentPlace: null
+        .set(`Paris`, [{city: {name: `Paris`}}])
     });
 
     expect(reducer(

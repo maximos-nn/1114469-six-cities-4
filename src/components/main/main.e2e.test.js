@@ -76,10 +76,12 @@ const sortTypes = [
   `Top rated first`
 ];
 
+const storeObj = {DATA: {currentCity, cityOffers}, UI: {currentSortType: `Popular`, sortTypes}};
+
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Place title should be clicked`, () => {
-  const store = mockStore({currentCity, cityOffers, currentSortType: `Popular`, sortTypes});
+  const store = mockStore(storeObj);
   const onPlaceTitleClick = jest.fn();
 
   const main = mount(
@@ -102,7 +104,7 @@ it(`Place title should be clicked`, () => {
 });
 
 it(`Bookmark should be clicked`, () => {
-  const store = mockStore({currentCity, cityOffers, currentSortType: `Popular`, sortTypes});
+  const store = mockStore(storeObj);
   const onBookmarkButtonClick = jest.fn();
 
   const main = mount(

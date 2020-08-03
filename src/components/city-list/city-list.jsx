@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import CityLink from "../city-link/city-link.jsx";
-import {ActionCreator} from "../../reducer";
+import {getCities, getCurrentCityName} from "../../reducers/data/selectors";
+import {ActionCreator} from "../../reducers/data/data";
 
 const CityList = (props) => {
   const {cities, activeCity, onCityLinkClick} = props;
@@ -29,8 +30,8 @@ CityList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  cities: [...state.cityOffers.keys()],
-  activeCity: state.currentCity.name
+  cities: getCities(state),
+  activeCity: getCurrentCityName(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -75,8 +75,10 @@ const sortTypes = [
   `Top rated first`
 ];
 
+const storeObj = {DATA: {currentCity, cityOffers}, UI: {currentSortType: `Popular`, sortTypes}};
+
 it(`Render App`, () => {
-  const store = mockStore({currentCity, cityOffers, currentSortType: `Popular`, sortTypes});
+  const store = mockStore(storeObj);
   const tree = renderer.create(
       <Provider store={store} >
         <App places={offers} city={`Amsterdam`} reviews={[]} nearbyPlaces={[]} onPlaceTitleClick={() => {}} />

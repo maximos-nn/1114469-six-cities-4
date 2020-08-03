@@ -6,6 +6,4 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString(`en`,
 
 const getComponentDisplayName = (component) => component.displayName || component.name || `Component`;
 
-const getCurrentPlaces = (state) => state.cityOffers.get(state.currentCity.name);
-
-export {calcRatingBarWidth, formatDate, getComponentDisplayName, getCurrentPlaces};
+export {calcRatingBarWidth, formatDate, getComponentDisplayName};

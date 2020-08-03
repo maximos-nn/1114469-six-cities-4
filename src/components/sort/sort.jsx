@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {ActionCreator} from "../../reducer";
+import {getSortTypes, getCurrentSortType} from "../../reducers/ui/selectors";
+import {ActionCreator} from "../../reducers/ui/ui";
 
 const Sort = (props) => {
   const {types, activeType, onTypeChange, toggle, onToggle} = props;
@@ -54,8 +55,8 @@ Sort.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  types: state.sortTypes,
-  activeType: state.currentSortType
+  types: getSortTypes(state),
+  activeType: getCurrentSortType(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,25 +1,16 @@
-import {SortType} from "./const.js";
-
 const initialState = {
   currentCity: {},
-  cityOffers: new Map(),
-  sortTypes: Object.values(SortType),
-  currentSortType: SortType.POPULAR,
-  currentPlace: null
+  cityOffers: new Map()
 };
 
 const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
-  CHANGE_CITY: `CHANGE_CITY`,
-  CHANGE_SORT_TYPE: `CHANGE_SORT_TYPE`,
-  CHANGE_PLACE: `CHANGE_PLACE`
+  CHANGE_CITY: `CHANGE_CITY`
 };
 
 const ActionCreator = {
   loadOffers: (offers) => ({type: ActionType.LOAD_OFFERS, payload: offers}),
-  changeCity: (city) => ({type: ActionType.CHANGE_CITY, payload: city}),
-  changeSortType: (sortType) => ({type: ActionType.CHANGE_SORT_TYPE, payload: sortType}),
-  changePlace: (place) => ({type: ActionType.CHANGE_PLACE, payload: place})
+  changeCity: (city) => ({type: ActionType.CHANGE_CITY, payload: city})
 };
 
 const mapOfferToCity = (result, offer) => {
@@ -51,12 +42,6 @@ const reducer = (state = initialState, action) => {
       }
       const currentCity = state.cityOffers.get(cityName)[0].city;
       return Object.assign({}, state, {currentCity});
-
-    case ActionType.CHANGE_SORT_TYPE:
-      return Object.assign({}, state, {currentSortType: action.payload});
-
-    case ActionType.CHANGE_PLACE:
-      return Object.assign({}, state, {currentPlace: action.payload});
 
     default:
       return state;

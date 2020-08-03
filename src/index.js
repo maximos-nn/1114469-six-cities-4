@@ -4,7 +4,8 @@ import {createStore} from "redux";
 import {Provider} from "react-redux";
 import App from "./components/app/app.jsx";
 import placeOffers from "./mocks/offers";
-import {reducer, ActionCreator} from "./reducer";
+import reducer from "./reducers/reducer";
+import {ActionCreator} from "./reducers/data/data";
 
 const store = createStore(
     reducer,

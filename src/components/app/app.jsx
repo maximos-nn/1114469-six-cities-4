@@ -7,9 +7,10 @@ import Main from "../main/main.jsx";
 import Offer from "../offer/offer.jsx";
 import mockNearbyPlaces from "../../mocks/offers";
 import mockReviews from "../../mocks/reviews";
-import {getCurrentPlaces} from "../../utils.js";
-import {ActionCreator} from "../../reducer.js";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import {getCurrentPlaces, getCurrentCityName} from "../../reducers/data/selectors";
+import {getCurrentPlace} from "../../reducers/ui/selectors";
+import {ActionCreator} from "../../reducers/ui/ui";
 
 const MAX_REVIEW_COUNT = 10;
 const MAX_NEARBY_PLACE_COUNT = 3;
@@ -70,8 +71,8 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   places: getCurrentPlaces(state),
-  city: state.currentCity.name,
-  currentPlace: state.currentPlace,
+  city: getCurrentCityName(state),
+  currentPlace: getCurrentPlace(state),
   reviews: limitReviews(mockReviews),
   nearbyPlaces: limitNearbyPlaces(mockNearbyPlaces)
 });
