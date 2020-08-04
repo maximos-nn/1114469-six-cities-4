@@ -68,12 +68,26 @@ const offers = [
 
 const cityOffers = new Map([[`Amsterdam`, [...offers]]]);
 const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
+const sortTypes = [
+  `Popular`,
+  `Price: low to high`,
+  `Price: high to low`,
+  `Top rated first`
+];
+
+const storeObj = {DATA: {currentCity, cityOffers}, UI: {currentSortType: `Popular`, sortTypes}};
 
 it(`Render Main component`, () => {
-  const store = mockStore({currentCity, cityOffers});
+  const store = mockStore(storeObj);
   const tree = renderer.create(
       <Provider store={store}>
-        <Main places={offers} city={`Amsterdam`} onPlaceTitleClick={() => {}} onBookmarkButtonClick={() => {}} />
+        <Main
+          places={offers}
+          city={`Amsterdam`}
+          onPlaceTitleClick={() => {}}
+          onBookmarkButtonClick={() => {}}
+          onActiveItemChange={() => {}}
+        />
       </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();

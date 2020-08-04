@@ -2,8 +2,9 @@ import React, {PureComponent, createRef} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
+import {getCurrentCityLocation, getCurrentCityZoom, getCurrentPlaces} from "../../reducers/data/selectors";
 
-const DEFAULT_ZOOM = 12;
+const getLocations = (places, activePlace) => places.map((place) => ({location: place.location, active: place === activePlace}));
 
 class Map extends PureComponent {
   constructor(props) {
@@ -87,9 +88,10 @@ Map.propTypes = {
   zoom: PropTypes.number.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  location: state.currentCity.location,
-  zoom: state.currentCity.zoom || DEFAULT_ZOOM
+const mapStateToProps = (state, ownProps) => ({
+  location: getCurrentCityLocation(state),
+  zoom: getCurrentCityZoom(state),
+  markers: getLocations(getCurrentPlaces(state), ownProps.activeItem)
 });
 
 export {Map};

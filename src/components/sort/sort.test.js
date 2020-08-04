@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Sort from "./sort.jsx";
+import {Sort} from "./sort.jsx";
 import {SortType} from "../../const.js";
 
 it(`Sort component should render correctly`, () => {

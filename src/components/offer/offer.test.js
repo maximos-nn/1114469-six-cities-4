@@ -141,8 +141,10 @@ const nearbyPlaces = [
 
 const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
 
+const cityOffers = new Map([[`Amsterdam`, nearbyPlaces]]);
+
 it(`Should render place card details correctly`, () => {
-  const store = mockStore({currentCity});
+  const store = mockStore({DATA: {cityOffers, currentCity}});
   const tree = renderer.create(
       <Provider store={store} >
         <Offer card={card} reviews={reviews} nearbyPlaces={nearbyPlaces} />

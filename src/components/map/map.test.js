@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import Map from "./map.jsx";
+import {Map} from "./map.jsx";
 
 const MAP_CLASS_NAME = `cities__map`;
 
@@ -29,7 +29,7 @@ it(`Map should render correctly`, () => {
   const store = mockStore({currentCity});
   const tree = renderer.create(
       <Provider store={store} >
-        <Map mapClass={MAP_CLASS_NAME} markers={markers} />
+        <Map mapClass={MAP_CLASS_NAME} markers={markers} zoom={12} location={currentCity.location} />
       </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();

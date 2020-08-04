@@ -6,6 +6,4 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString(`en`,
 
 const getComponentDisplayName = (component) => component.displayName || component.name || `Component`;
 
-const getLocations = (places, activePlace) => places.map((place) => ({location: place.location, active: place === activePlace}));
-
-export {calcRatingBarWidth, formatDate, getComponentDisplayName, getLocations};
+export {calcRatingBarWidth, formatDate, getComponentDisplayName};

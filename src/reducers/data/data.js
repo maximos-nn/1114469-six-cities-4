@@ -1,3 +1,5 @@
+import {parseOffers} from "../../adapters/offers";
+
 const initialState = {
   currentCity: {},
   cityOffers: new Map()
@@ -11,6 +13,15 @@ const ActionType = {
 const ActionCreator = {
   loadOffers: (offers) => ({type: ActionType.LOAD_OFFERS, payload: offers}),
   changeCity: (city) => ({type: ActionType.CHANGE_CITY, payload: city})
+};
+
+const Operation = {
+  loadOffers: () => (dispatch, getState, api) => {
+    return api.get(`/hotels`)
+      .then((response) => {
+        dispatch(ActionCreator.loadOffers(parseOffers(response.data)));
+      });
+  },
 };
 
 const mapOfferToCity = (result, offer) => {
@@ -48,4 +59,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export {ActionType, ActionCreator, reducer};
+export {ActionType, ActionCreator, Operation, reducer};

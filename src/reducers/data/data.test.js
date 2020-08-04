@@ -1,4 +1,4 @@
-import {reducer, ActionType, ActionCreator} from "./reducer";
+import {reducer, ActionType, ActionCreator} from "./data";
 
 describe(`Reducer should work correctly`, () => {
   it(`Reducer without parameters should return initial state`, () => {

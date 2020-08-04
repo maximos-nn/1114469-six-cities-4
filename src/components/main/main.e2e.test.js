@@ -67,18 +67,32 @@ const offers = [
   }
 ];
 
-const cityOffers = new Map([[`Amsterdam`, [...offers]]]);
+const cityOffers = new Map([[`Amsterdam`, offers]]);
 const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
+const sortTypes = [
+  `Popular`,
+  `Price: low to high`,
+  `Price: high to low`,
+  `Top rated first`
+];
+
+const storeObj = {DATA: {currentCity, cityOffers}, UI: {currentSortType: `Popular`, sortTypes}};
 
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Place title should be clicked`, () => {
-  const store = mockStore({currentCity, cityOffers});
+  const store = mockStore(storeObj);
   const onPlaceTitleClick = jest.fn();
 
   const main = mount(
       <Provider store={store} >
-        <Main places={offers} city={`Amsterdam`} onPlaceTitleClick={onPlaceTitleClick} onBookmarkButtonClick={() => {}} />
+        <Main
+          places={offers}
+          city={`Amsterdam`}
+          onPlaceTitleClick={onPlaceTitleClick}
+          onBookmarkButtonClick={() => {}}
+          onActiveItemChange={() => {}}
+        />
       </Provider>
   );
 
@@ -90,12 +104,18 @@ it(`Place title should be clicked`, () => {
 });
 
 it(`Bookmark should be clicked`, () => {
-  const store = mockStore({currentCity, cityOffers});
+  const store = mockStore(storeObj);
   const onBookmarkButtonClick = jest.fn();
 
   const main = mount(
       <Provider store={store} >
-        <Main places={offers} city={`Amsterdam`} onPlaceTitleClick={() => {}} onBookmarkButtonClick={onBookmarkButtonClick} />
+        <Main
+          places={offers}
+          city={`Amsterdam`}
+          onPlaceTitleClick={() => {}}
+          onBookmarkButtonClick={onBookmarkButtonClick}
+          onActiveItemChange={() => {}}
+        />
       </Provider>
   );
 
