@@ -1,10 +1,10 @@
-const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+import {PlaceType} from "../const";
 
 const parseOffers = (rawOffers) => {
   return rawOffers.map((offer) => ({
     id: offer.id,
     title: offer.title,
-    type: capitalizeFirstLetter(offer.type),
+    type: PlaceType[offer.type.toUpperCase()],
     picture: offer.preview_image,
     price: offer.price,
     rating: offer.rating,

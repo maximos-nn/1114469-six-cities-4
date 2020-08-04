@@ -1,3 +1,4 @@
+import {createSelector} from "reselect";
 import NameSpace from "../name-space";
 import {SortType} from "../../const";
 import {getCurrentSortType} from "../ui/selectors";
@@ -20,9 +21,9 @@ const sortPlaces = (places, sortType) => {
 
 const getCurrentPlaces = (state) => state[NAME_SPACE].cityOffers.get(
     state[NAME_SPACE].currentCity.name
-);
+) || [];
 
-const getCurrentCityName = (state) => state[NAME_SPACE].currentCity.name;
+const getCurrentCityName = (state) => state[NAME_SPACE].currentCity.name || ``;
 
 const getCities = (state) => [...state[NAME_SPACE].cityOffers.keys()];
 
@@ -30,7 +31,11 @@ const getCurrentCityLocation = (state) => state[NAME_SPACE].currentCity.location
 
 const getCurrentCityZoom = (state) => state[NAME_SPACE].currentCity.zoom || DEFAULT_ZOOM;
 
-const getSortedPlaces = (state) => sortPlaces(getCurrentPlaces(state), getCurrentSortType(state));
+const getSortedPlaces = createSelector(
+    getCurrentPlaces,
+    getCurrentSortType,
+    (places, sortType) => sortPlaces(places, sortType)
+);
 
 export {
   getCurrentPlaces,
