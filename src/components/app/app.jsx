@@ -49,11 +49,15 @@ const App = (props) => {
           {renderApp(props)}
         </Route>
         <Route exact path="/dev-offer">
-          <Offer
-            card={places[0]}
-            reviews={reviews}
-            nearbyPlaces={nearbyPlaces}
-          />
+          {
+            places.length ?
+              <Offer
+                card={places[0]}
+                reviews={reviews}
+                nearbyPlaces={nearbyPlaces}
+              />
+              : ``
+          }
         </Route>
       </Switch>
     </BrowserRouter>
@@ -69,13 +73,15 @@ App.propTypes = {
   nearbyPlaces: placeListType
 };
 
-const mapStateToProps = (state) => ({
-  places: getCurrentPlaces(state),
-  city: getCurrentCityName(state),
-  currentPlace: getCurrentPlace(state),
-  reviews: limitReviews(mockReviews),
-  nearbyPlaces: limitNearbyPlaces(mockNearbyPlaces)
-});
+const mapStateToProps = (state) => {
+  return {
+    places: getCurrentPlaces(state),
+    city: getCurrentCityName(state),
+    currentPlace: getCurrentPlace(state),
+    reviews: limitReviews(mockReviews),
+    nearbyPlaces: limitNearbyPlaces(mockNearbyPlaces)
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onPlaceTitleClick(place) {
