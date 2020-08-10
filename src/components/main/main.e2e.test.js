@@ -5,6 +5,7 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
 import {PlaceType} from "../../const";
+import {AuthenticationStatus} from "../../reducers/user/user.js";
 
 const mockStore = configureStore([]);
 
@@ -76,7 +77,11 @@ const sortTypes = [
   `Top rated first`
 ];
 
-const storeObj = {DATA: {currentCity, cityOffers}, UI: {currentSortType: `Popular`, sortTypes}};
+const storeObj = {
+  DATA: {currentCity, cityOffers},
+  UI: {currentSortType: `Popular`, sortTypes},
+  USER: {authenticationStatus: AuthenticationStatus.NO_AUTH, user: {}}
+};
 
 Enzyme.configure({adapter: new Adapter()});
 

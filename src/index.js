@@ -7,7 +7,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import App from "./components/app/app.jsx";
 import reducer from "./reducers/reducer";
 import {Operation as DataOperation} from "./reducers/data/data";
-import {ActionCreator as UserActionCreator, AuthenticationStatus} from "./reducers/user/user";
+import {ActionCreator as UserActionCreator, Operation as UserOperation, AuthenticationStatus} from "./reducers/user/user";
 import {createAPI} from "./api";
 
 const onUnauthorized = () => {
@@ -22,6 +22,7 @@ const store = createStore(
 );
 
 store.dispatch(DataOperation.loadOffers());
+store.dispatch(UserOperation.checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
