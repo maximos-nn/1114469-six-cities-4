@@ -4,6 +4,7 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import Offer from "./offer.jsx";
 import {PlaceType} from "../../const";
+import {AuthenticationStatus} from "../../reducers/user/user.js";
 
 const mockStore = configureStore([]);
 
@@ -144,7 +145,10 @@ const currentCity = {name: `Amsterdam`, location: [52.37454, 4.897976]};
 const cityOffers = new Map([[`Amsterdam`, nearbyPlaces]]);
 
 it(`Should render place card details correctly`, () => {
-  const store = mockStore({DATA: {cityOffers, currentCity}});
+  const store = mockStore({
+    DATA: {cityOffers, currentCity},
+    USER: {authenticationStatus: AuthenticationStatus.AUTH, user: {email: `Oliver.conner@gmail.com`}}
+  });
   const tree = renderer.create(
       <Provider store={store} >
         <Offer card={card} reviews={reviews} nearbyPlaces={nearbyPlaces} />

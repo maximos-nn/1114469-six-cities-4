@@ -11,6 +11,7 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import {getCurrentPlaces, getCurrentCityName} from "../../reducers/data/selectors";
 import {getCurrentPlace} from "../../reducers/ui/selectors";
 import {ActionCreator} from "../../reducers/ui/ui";
+import SignIn from "../sign-in/sign-in.jsx";
 
 const MAX_REVIEW_COUNT = 10;
 const MAX_NEARBY_PLACE_COUNT = 3;
@@ -58,6 +59,9 @@ const App = (props) => {
               />
               : ``
           }
+        </Route>
+        <Route exact path="/dev-signin">
+          <SignIn />
         </Route>
       </Switch>
     </BrowserRouter>

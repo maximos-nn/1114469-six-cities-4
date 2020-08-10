@@ -56,8 +56,9 @@ class Map extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.location !== this.props.location) {
-      this._map.flyTo(this.props.location);
+    const {location, zoom} = this.props;
+    if (prevProps.location !== location) {
+      this._map.flyTo(location, zoom);
     }
     this._markerGroup.clearLayers();
     this._addMarkers();
