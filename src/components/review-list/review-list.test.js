@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {ReviewList} from "./review-list.jsx";
-import { AuthenticationStatus } from "../../reducers/user/user.js";
+import {AuthenticationStatus} from "../../reducers/user/user.js";
 
 const reviews = [
   {
