@@ -1,18 +1,25 @@
 import {parseOffers} from "../../adapters/offers";
+import {parseComments} from "../../adapters/comments";
 
 const initialState = {
   currentCity: {},
-  cityOffers: new Map()
+  cityOffers: new Map(),
+  reviews: [],
+  nearbyOffers: []
 };
 
 const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
-  CHANGE_CITY: `CHANGE_CITY`
+  CHANGE_CITY: `CHANGE_CITY`,
+  LOAD_REVIEWS: `LOAD_REVIEWS`,
+  LOAD_NEARBY_OFFERS: `LOAD_NEARBY_OFFERS`
 };
 
 const ActionCreator = {
   loadOffers: (offers) => ({type: ActionType.LOAD_OFFERS, payload: offers}),
-  changeCity: (city) => ({type: ActionType.CHANGE_CITY, payload: city})
+  changeCity: (city) => ({type: ActionType.CHANGE_CITY, payload: city}),
+  loadReviews: (reviews) => ({type: ActionType.LOAD_REVIEWS, payload: reviews}),
+  loadNearbyOffers: (offers) => ({type: ActionType.LOAD_NEARBY_OFFERS, payload: offers})
 };
 
 const Operation = {
@@ -22,6 +29,24 @@ const Operation = {
         dispatch(ActionCreator.loadOffers(parseOffers(response.data)));
       });
   },
+  loadReviews: (offerId) => (dispatch, getState, api) => {
+    return api.get(`/comments/${offerId}`)
+      .then((response) => {
+        dispatch(ActionCreator.loadReviews(parseComments(response.data)));
+      });
+  },
+  postReview: (offerId, review) => (dispatch, getState, api) => {
+    return api.post(`/comments/${offerId}`, review)
+      .then((response) => {
+        dispatch(ActionCreator.loadReviews(parseComments(response.data)));
+      });
+  },
+  loadNearbyOffers: (offerId) => (dispatch, getState, api) => {
+    return api.get(`/hotels/${offerId}/nearby`)
+      .then((response) => {
+        dispatch(ActionCreator.loadNearbyOffers(parseOffers(response.data)));
+      });
+  }
 };
 
 const mapOfferToCity = (result, offer) => {
@@ -53,6 +78,12 @@ const reducer = (state = initialState, action) => {
       }
       const currentCity = state.cityOffers.get(cityName)[0].city;
       return Object.assign({}, state, {currentCity});
+
+    case ActionType.LOAD_REVIEWS:
+      return Object.assign({}, state, {reviews: action.payload});
+
+    case ActionType.LOAD_NEARBY_OFFERS:
+      return Object.assign({}, state, {nearbyOffers: action.payload});
 
     default:
       return state;

@@ -1,7 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import {ReviewList} from "./review-list.jsx";
-import {AuthenticationStatus} from "../../reducers/user/user.js";
+import ReviewList from "./review-list.jsx";
 
 const reviews = [
   {
@@ -28,7 +27,7 @@ const reviews = [
 
 it(`Review list should render correctly`, () => {
   const tree = renderer.create(
-      <ReviewList reviews={reviews} userStatus={AuthenticationStatus.AUTH} />
+      <ReviewList reviews={reviews} isPostingAllowed={true} onReviewPost={() => {}} />
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });

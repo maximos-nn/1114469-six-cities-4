@@ -5,6 +5,8 @@ import {getCurrentSortType} from "../ui/selectors";
 
 const NAME_SPACE = NameSpace.DATA;
 const DEFAULT_ZOOM = 12;
+const MAX_REVIEW_COUNT = 10;
+const MAX_NEARBY_PLACE_COUNT = 3;
 
 const sortPlaces = (places, sortType) => {
   switch (sortType) {
@@ -37,11 +39,24 @@ const getSortedPlaces = createSelector(
     (places, sortType) => sortPlaces(places, sortType)
 );
 
+const getReviews = (state) => state[NAME_SPACE].reviews || [];
+
+const getSortedReviews = createSelector(
+    getReviews,
+    (reviews) => reviews.slice()
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, MAX_REVIEW_COUNT)
+);
+
+const getNearbyPlaces = (state) => state[NAME_SPACE].nearbyOffers.slice(0, MAX_NEARBY_PLACE_COUNT) || [];
+
 export {
   getCurrentPlaces,
   getCurrentCityName,
   getCities,
   getCurrentCityLocation,
   getCurrentCityZoom,
-  getSortedPlaces
+  getSortedPlaces,
+  getSortedReviews,
+  getNearbyPlaces
 };

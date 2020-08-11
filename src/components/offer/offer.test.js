@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import Offer from "./offer.jsx";
+import {Offer} from "./offer.jsx";
 import {PlaceType} from "../../const";
 import {AuthenticationStatus} from "../../reducers/user/user.js";
 
@@ -151,7 +151,15 @@ it(`Should render place card details correctly`, () => {
   });
   const tree = renderer.create(
       <Provider store={store} >
-        <Offer card={card} reviews={reviews} nearbyPlaces={nearbyPlaces} />
+        <Offer
+          card={card}
+          reviews={reviews}
+          nearbyPlaces={nearbyPlaces}
+          onReviewsLoad={() => {}}
+          onNearbyPlacesLoad={() => {}}
+          onReviewPost={() => {}}
+          userStatus={`AUTH`}
+        />
       </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();
