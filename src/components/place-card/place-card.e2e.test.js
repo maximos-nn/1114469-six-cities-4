@@ -1,8 +1,10 @@
 import React from "react";
-import {configure, shallow} from "enzyme";
+import {configure, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import PlaceCard from "./place-card.jsx";
 import {PlaceType} from "../../const";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const CARD_CLASS_NAME = `cities__place-card`;
 const IMAGE_WRAPPER_CLASS_NAME = `cities__image-wrapper`;
@@ -36,27 +38,24 @@ const card = {
   city: {name: `Amsterdam`}
 };
 
-const mockEvent = {
-  preventDefault() {}
-};
-
 configure({adapter: new Adapter()});
 
 it(`Hovering over place card should pass correct card object to callback`, () => {
   const onCardMouseEnter = jest.fn();
 
-  const placeCard = shallow(
-      <PlaceCard
-        cardClass={CARD_CLASS_NAME}
-        imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
-        card={card}
-        events={{
-          onCardMouseEnter,
-          onCardMouseLeave: () => {},
-          onBookmarkButtonClick: () => {},
-          onPlaceTitleClick: () => {}
-        }}
-      />
+  const placeCard = mount(
+      <Router history={history}>
+        <PlaceCard
+          cardClass={CARD_CLASS_NAME}
+          imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
+          card={card}
+          events={{
+            onCardMouseEnter,
+            onCardMouseLeave: () => {},
+            onBookmarkButtonClick: () => {},
+          }}
+        />
+      </Router>
   );
 
   const cardElement = placeCard.find(`.place-card`);
@@ -64,28 +63,4 @@ it(`Hovering over place card should pass correct card object to callback`, () =>
 
   expect(onCardMouseEnter).toHaveBeenCalledTimes(1);
   expect(onCardMouseEnter.mock.calls[0][0]).toMatchObject(card);
-});
-
-it(`Click on place card title should pass correct card object to callback`, () => {
-  const onTitleClick = jest.fn();
-
-  const placeCard = shallow(
-      <PlaceCard
-        cardClass={CARD_CLASS_NAME}
-        imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
-        card={card}
-        events={{
-          onCardMouseEnter: () => {},
-          onCardMouseLeave: () => {},
-          onBookmarkButtonClick: () => {},
-          onPlaceTitleClick: onTitleClick
-        }}
-      />
-  );
-
-  const title = placeCard.find(`.place-card__name a`);
-  title.simulate(`click`, mockEvent);
-
-  expect(onTitleClick).toHaveBeenCalledTimes(1);
-  expect(onTitleClick.mock.calls[0][0]).toMatchObject(card);
 });

@@ -9,8 +9,7 @@ describe(`Reducer should work correctly`, () => {
         `Price: high to low`,
         `Top rated first`
       ],
-      currentSortType: `Popular`,
-      currentPlace: null
+      currentSortType: `Popular`
     });
   });
 
@@ -29,8 +28,7 @@ describe(`Reducer should work correctly`, () => {
         `Price: high to low`,
         `Top rated first`
       ],
-      currentSortType: `Price: high to low`,
-      currentPlace: null
+      currentSortType: `Price: high to low`
     });
 
     expect(reducer(
@@ -41,8 +39,7 @@ describe(`Reducer should work correctly`, () => {
             `Price: high to low`,
             `Top rated first`
           ],
-          currentSortType: `Price: low to high`,
-          currentPlace: null
+          currentSortType: `Price: low to high`
         },
         {
           type: ActionType.CHANGE_SORT_TYPE,
@@ -56,64 +53,7 @@ describe(`Reducer should work correctly`, () => {
         `Price: high to low`,
         `Top rated first`
       ],
-      currentSortType: `Top rated first`,
-      currentPlace: null
-    });
-  });
-
-  it(`Reducer should return correct state after place change`, () => {
-    expect(reducer(
-        {
-          sortTypes: [
-            `Popular`,
-            `Price: low to high`,
-            `Price: high to low`,
-            `Top rated first`
-          ],
-          currentSortType: `Popular`,
-          currentPlace: null
-        },
-        {
-          type: ActionType.CHANGE_PLACE,
-          payload: {id: 1}
-        }
-    ))
-    .toEqual({
-      sortTypes: [
-        `Popular`,
-        `Price: low to high`,
-        `Price: high to low`,
-        `Top rated first`
-      ],
-      currentSortType: `Popular`,
-      currentPlace: {id: 1}
-    });
-
-    expect(reducer(
-        {
-          sortTypes: [
-            `Popular`,
-            `Price: low to high`,
-            `Price: high to low`,
-            `Top rated first`
-          ],
-          currentSortType: `Popular`,
-          currentPlace: {id: 1}
-        },
-        {
-          type: ActionType.CHANGE_PLACE,
-          payload: null
-        }
-    ))
-    .toEqual({
-      sortTypes: [
-        `Popular`,
-        `Price: low to high`,
-        `Price: high to low`,
-        `Top rated first`
-      ],
-      currentSortType: `Popular`,
-      currentPlace: null
+      currentSortType: `Top rated first`
     });
   });
 });
@@ -125,16 +65,6 @@ describe(`Action creators should work correctly`, () => {
         {
           type: ActionType.CHANGE_SORT_TYPE,
           payload: `Top rated first`
-        }
-    );
-  });
-
-  it(`Change city creator should return correct action`, () => {
-    expect(ActionCreator.changePlace({id: 1}))
-    .toEqual(
-        {
-          type: ActionType.CHANGE_PLACE,
-          payload: {id: 1}
         }
     );
   });

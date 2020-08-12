@@ -20,7 +20,7 @@ exports[`Header of main page should render correctly 1`] = `
             alt="6 cities logo"
             className="header__logo"
             height="41"
-            src="img/logo.svg"
+            src="/img/logo.svg"
             width="81"
           />
         </a>
@@ -70,13 +70,14 @@ exports[`Header with authenticated user should render correctly 1`] = `
       >
         <a
           className="header__logo-link"
-          href="main.html"
+          href="/"
+          onClick={[Function]}
         >
           <img
             alt="6 cities logo"
             className="header__logo"
             height="41"
-            src="img/logo.svg"
+            src="/img/logo.svg"
             width="81"
           />
         </a>
@@ -126,13 +127,14 @@ exports[`Header without authenticated user should render correctly 1`] = `
       >
         <a
           className="header__logo-link"
-          href="main.html"
+          href="/"
+          onClick={[Function]}
         >
           <img
             alt="6 cities logo"
             className="header__logo"
             height="41"
-            src="img/logo.svg"
+            src="/img/logo.svg"
             width="81"
           />
         </a>

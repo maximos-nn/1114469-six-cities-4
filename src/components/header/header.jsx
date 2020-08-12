@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {getAuthenticationStatus, getEmail} from "../../reducers/user/selectors";
 import {AuthenticationStatus} from "../../reducers/user/user";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const";
 
 const Header = (props) => {
   const {isMain, userStatus, email} = props;
@@ -14,12 +16,12 @@ const Header = (props) => {
             {
               isMain ?
                 <a className="header__logo-link header__logo-link--active">
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+                  <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41" />
                 </a>
                 :
-                <a className="header__logo-link" href="main.html">
-                  <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-                </a>
+                <Link to={AppRoute.ROOT} className="header__logo-link">
+                  <img className="header__logo" src="/img/logo.svg" alt="6 cities logo" width="81" height="41" />
+                </Link>
             }
           </div>
           <nav className="header__nav">

@@ -2,6 +2,8 @@ import React from "react";
 import renderer from "react-test-renderer";
 import NearbyPlaceList from "./nearby-place-list.jsx";
 import {PlaceType} from "../../const";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const offers = [
   {
@@ -92,11 +94,12 @@ const offers = [
 
 it(`Render nearby place list`, () => {
   const tree = renderer.create(
-      <NearbyPlaceList
-        places={offers}
-        onPlaceTitleClick={() => {}}
-        onBookmarkButtonClick={() => {}}
-      />
+      <Router history={history}>
+        <NearbyPlaceList
+          places={offers}
+          onBookmarkButtonClick={() => {}}
+        />
+      </Router>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });

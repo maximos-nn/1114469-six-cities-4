@@ -93,7 +93,7 @@ exports[`Should render place card correctly 1`] = `
       className="place-card__name"
     >
       <a
-        href="#"
+        href="/offer/14"
         onClick={[Function]}
       >
         Beautiful & luxurious apartment at great location

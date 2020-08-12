@@ -21,9 +21,8 @@ class Main extends PureComponent {
     this._handleCardMouseEnter = this._handleCardMouseEnter.bind(this);
     this._handleCardMouseLeave = this._handleCardMouseLeave.bind(this);
 
-    const {onPlaceTitleClick, onBookmarkButtonClick} = props;
+    const {onBookmarkButtonClick} = props;
     this._cardEvents = {
-      onPlaceTitleClick,
       onBookmarkButtonClick,
       onCardMouseEnter: this._handleCardMouseEnter,
       onCardMouseLeave: this._handleCardMouseLeave
@@ -82,7 +81,6 @@ class Main extends PureComponent {
 Main.propTypes = {
   places: placeListType,
   city: PropTypes.string.isRequired,
-  onPlaceTitleClick: PropTypes.func.isRequired,
   onBookmarkButtonClick: PropTypes.func.isRequired,
   activeItem: PropTypes.oneOfType([placeCardType]),
   onActiveItemChange: PropTypes.func.isRequired

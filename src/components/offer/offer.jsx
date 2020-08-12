@@ -8,7 +8,7 @@ import ReviewList from "../review-list/review-list.jsx";
 import Header from "../header/header.jsx";
 import {calcRatingBarWidth} from "../../utils";
 import {Operation as DataOperation} from "../../reducers/data/data";
-import {getSortedReviews, getNearbyPlaces} from "../../reducers/data/selectors";
+import {getSortedReviews, getNearbyPlaces, getPlaceById} from "../../reducers/data/selectors";
 import {getAuthenticationStatus} from "../../reducers/user/selectors";
 import {AuthenticationStatus} from "../../reducers/user/user";
 
@@ -151,7 +151,7 @@ class Offer extends PureComponent {
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <NearbyPlaceList places={nearbyPlaces} onPlaceTitleClick={() => {}} onBookmarkButtonClick={() => {}} />
+              <NearbyPlaceList places={nearbyPlaces} onBookmarkButtonClick={() => {}} />
             </section>
           </div>
         </main>
@@ -170,7 +170,8 @@ Offer.propTypes = {
   userStatus: PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
+  card: getPlaceById(state, parseInt(ownProps.match.params.id, 10)),
   reviews: getSortedReviews(state),
   nearbyPlaces: getNearbyPlaces(state),
   userStatus: getAuthenticationStatus(state)

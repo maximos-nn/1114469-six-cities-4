@@ -25,6 +25,16 @@ const getCurrentPlaces = (state) => state[NAME_SPACE].cityOffers.get(
     state[NAME_SPACE].currentCity.name
 ) || [];
 
+const getPlaceById = (state, id) => {
+  for (const places of state[NAME_SPACE].cityOffers.values()) {
+    const foundPlace = places.find((place) => place.id === id);
+    if (foundPlace) {
+      return foundPlace;
+    }
+  }
+  return null;
+};
+
 const getCurrentCityName = (state) => state[NAME_SPACE].currentCity.name || ``;
 
 const getCities = (state) => [...state[NAME_SPACE].cityOffers.keys()];
@@ -52,6 +62,7 @@ const getNearbyPlaces = (state) => state[NAME_SPACE].nearbyOffers.slice(0, MAX_N
 
 export {
   getCurrentPlaces,
+  getPlaceById,
   getCurrentCityName,
   getCities,
   getCurrentCityLocation,

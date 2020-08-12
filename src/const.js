@@ -14,4 +14,10 @@ const SortType = {
   TOP_RATED: `Top rated first`
 };
 
-export {PERCENTS_PER_RATING_POINT, PlaceType, SortType};
+const AppRoute = {
+  ROOT: `/`,
+  SIGNIN: `/login`,
+  OFFER: `/offer`
+};
+
+export {PERCENTS_PER_RATING_POINT, PlaceType, SortType, AppRoute};

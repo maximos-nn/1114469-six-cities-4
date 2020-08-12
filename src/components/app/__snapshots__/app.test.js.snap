@@ -23,7 +23,7 @@ exports[`Render App 1`] = `
               alt="6 cities logo"
               className="header__logo"
               height="41"
-              src="img/logo.svg"
+              src="/img/logo.svg"
               width="81"
             />
           </a>
@@ -260,7 +260,7 @@ exports[`Render App 1`] = `
                   className="place-card__name"
                 >
                   <a
-                    href="#"
+                    href="/offer/11"
                     onClick={[Function]}
                   >
                     Beautiful & luxurious apartment at great location
@@ -358,7 +358,7 @@ exports[`Render App 1`] = `
                   className="place-card__name"
                 >
                   <a
-                    href="#"
+                    href="/offer/22"
                     onClick={[Function]}
                   >
                     Wood and stone place
