@@ -19,13 +19,17 @@ const MAP_CLASS_NAME = `property__map`;
 
 class Offer extends PureComponent {
   componentDidMount() {
-    const {card, onReviewsLoad, onNearbyPlacesLoad} = this.props;
-    onReviewsLoad(card.id);
-    onNearbyPlacesLoad(card.id);
+    const {card, onReviewsLoad, onNearbyPlacesLoad, match} = this.props;
+    const id = card && card.id || parseInt(match.params.id, 10);
+    onReviewsLoad(id);
+    onNearbyPlacesLoad(id);
   }
 
   componentDidUpdate(prevProps) {
     const {card, onReviewsLoad} = this.props;
+    if (!prevProps.card) {
+      return;
+    }
     const {id: prevId} = prevProps.card;
     if (card.id !== prevId) {
       onReviewsLoad(card.id);
@@ -34,6 +38,9 @@ class Offer extends PureComponent {
 
   render() {
     const {card, reviews, nearbyPlaces, onReviewPost, userStatus, onToggleFavorite} = this.props;
+    if (!card) {
+      return null;
+    }
     const {
       title,
       type,
@@ -174,14 +181,19 @@ class Offer extends PureComponent {
 }
 
 Offer.propTypes = {
-  card: placeCardType,
+  card: PropTypes.oneOfType([placeCardType]),
   reviews: reviewListType,
   nearbyPlaces: placeListType,
   onReviewsLoad: PropTypes.func.isRequired,
   onNearbyPlacesLoad: PropTypes.func.isRequired,
   onReviewPost: PropTypes.func.isRequired,
   onToggleFavorite: PropTypes.func.isRequired,
-  userStatus: PropTypes.string.isRequired
+  userStatus: PropTypes.string.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    }).isRequired
+  })
 };
 
 const mapStateToProps = (state, ownProps) => ({
