@@ -36,7 +36,8 @@ exports[`Header of main page should render correctly 1`] = `
           >
             <a
               className="header__nav-link header__nav-link--profile"
-              href="#"
+              href="/favorites"
+              onClick={[Function]}
             >
               <div
                 className="header__avatar-wrapper user__avatar-wrapper"
@@ -93,7 +94,8 @@ exports[`Header with authenticated user should render correctly 1`] = `
           >
             <a
               className="header__nav-link header__nav-link--profile"
-              href="#"
+              href="/favorites"
+              onClick={[Function]}
             >
               <div
                 className="header__avatar-wrapper user__avatar-wrapper"
@@ -150,7 +152,6 @@ exports[`Header without authenticated user should render correctly 1`] = `
           >
             <a
               className="header__nav-link header__nav-link--profile"
-              href="#"
             >
               <div
                 className="header__avatar-wrapper user__avatar-wrapper"

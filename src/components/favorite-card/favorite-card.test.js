@@ -1,12 +1,9 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import {PlaceCard} from "./place-card.jsx";
-import {PlaceType} from "../../const";
+import FavoriteCard from "./favorite-card.jsx";
+import {PlaceType} from "../../const.js";
 import {Router} from "react-router-dom";
-import history from "../../history.js";
-
-const CARD_CLASS_NAME = `cities__place-card`;
-const IMAGE_WRAPPER_CLASS_NAME = `cities__image-wrapper`;
+import history from "../../history";
 
 const card = {
   id: 14,
@@ -37,20 +34,10 @@ const card = {
   city: {name: `Amsterdam`}
 };
 
-it(`Should render place card correctly`, () => {
+it(`Should render favorite card correctly`, () => {
   const tree = renderer.create(
       <Router history={history}>
-        <PlaceCard
-          cardClass={CARD_CLASS_NAME}
-          imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
-          card={card}
-          events={{
-            onCardMouseEnter: () => {},
-            onCardMouseLeave: () => {},
-            onBookmarkButtonClick: () => {},
-          }}
-          onToggleFavorite={() => {}}
-        />
+        <FavoriteCard card={card} />
       </Router>
   ).toJSON();
   expect(tree).toMatchSnapshot();

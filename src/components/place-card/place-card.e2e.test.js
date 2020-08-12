@@ -54,6 +54,7 @@ it(`Hovering over place card should pass correct card object to callback`, () =>
             onCardMouseLeave: () => {},
             onBookmarkButtonClick: () => {},
           }}
+          onToggleFavorite={() => {}}
         />
       </Router>
   );

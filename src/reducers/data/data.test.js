@@ -64,7 +64,8 @@ describe(`Reducer should work correctly`, () => {
       currentCity: {},
       cityOffers: new Map(),
       reviews: [],
-      nearbyOffers: []
+      nearbyOffers: [],
+      favorites: []
     });
   });
 
@@ -74,7 +75,8 @@ describe(`Reducer should work correctly`, () => {
       currentCity: {},
       cityOffers: new Map(),
       reviews: [],
-      nearbyOffers: []
+      nearbyOffers: [],
+      favorites: []
     });
   });
 
@@ -96,7 +98,8 @@ describe(`Reducer should work correctly`, () => {
         .set(`Amsterdam`, [{city: {name: `Amsterdam`}}, {city: {name: `Amsterdam`}}])
         .set(`Paris`, [{city: {name: `Paris`}}]),
       reviews: [],
-      nearbyOffers: []
+      nearbyOffers: [],
+      favorites: []
     });
 
     expect(reducer(
@@ -183,7 +186,8 @@ describe(`Reducer should work correctly`, () => {
         {rating: 2, comment: `comment2`},
         {rating: 3, comment: `comment3`}
       ],
-      nearbyOffers: []
+      nearbyOffers: [],
+      favorites: []
     });
   });
 
@@ -207,7 +211,8 @@ describe(`Reducer should work correctly`, () => {
         {city: {name: `Amsterdam`}},
         {city: {name: `Paris`}},
         {city: {name: `Amsterdam`}}
-      ]
+      ],
+      favorites: []
     });
   });
 
@@ -231,6 +236,21 @@ describe(`Reducer should work correctly`, () => {
         .set(`Hamburg`, [{isBookmarked: true}])
         .set(`Brussels`, [{isBookmarked: false}]),
       nearbyOffers: []
+    });
+  });
+
+  it(`Reducer should return correct state after loading favorites`, () => {
+    expect(reducer(
+        {
+          favorites: []
+        },
+        {
+          type: ActionType.LOAD_FAVORITES,
+          payload: [{isBookmarked: true}]
+        }
+    ))
+    .toEqual({
+      favorites: [{isBookmarked: true}]
     });
   });
 });
@@ -303,6 +323,19 @@ describe(`Action creators should work correctly`, () => {
         {
           type: ActionType.UPDATE_OFFER,
           payload: {city: {name: `Hamburg`}, isBookmarked: true}
+        }
+    );
+  });
+
+  it(`Load favorites creator should return correct action`, () => {
+    expect(ActionCreator.loadFavorites([]))
+    .toEqual({type: ActionType.LOAD_FAVORITES, payload: []});
+
+    expect(ActionCreator.loadFavorites([{city: {name: `Hamburg`}}, {city: {name: `Brussels`}}]))
+    .toEqual(
+        {
+          type: ActionType.LOAD_FAVORITES,
+          payload: [{city: {name: `Hamburg`}}, {city: {name: `Brussels`}}]
         }
     );
   });
@@ -386,6 +419,21 @@ describe(`Operation should work correctly`, () => {
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith(
           {type: ActionType.UPDATE_OFFER, payload: parseOffer(mockOffers[0])}
+      );
+    });
+  });
+
+  it(`Should make a correct API call to get favorites`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const favoritesLoader = Operation.loadFavorites();
+
+    apiMock.onGet(`/favorite`).reply(200, mockOffers);
+
+    return favoritesLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+          {type: ActionType.LOAD_FAVORITES, payload: parseOffers(mockOffers)}
       );
     });
   });
