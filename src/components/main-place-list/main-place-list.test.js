@@ -1,9 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import configureStore from "redux-mock-store";
+import {Provider} from "react-redux";
 import {MainPlaceList} from "./main-place-list.jsx";
 import {PlaceType, SortType} from "../../const";
 import {Router} from "react-router-dom";
 import history from "../../history.js";
+
+const mockStore = configureStore([]);
 
 const offers = [
   {
@@ -93,18 +97,21 @@ const offers = [
 ];
 
 it(`Render main place list`, () => {
+  const store = mockStore({});
   const tree = renderer.create(
-      <Router history={history}>
-        <MainPlaceList
-          places={offers}
-          sortType={SortType.POPULAR}
-          events={{
-            onCardMouseEnter: () => {},
-            onCardMouseLeave: () => {},
-            onBookmarkButtonClick: () => {}
-          }}
-        />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <MainPlaceList
+            places={offers}
+            sortType={SortType.POPULAR}
+            events={{
+              onCardMouseEnter: () => {},
+              onCardMouseLeave: () => {},
+              onBookmarkButtonClick: () => {}
+            }}
+          />
+        </Router>
+      </Provider>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });

@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import {reducer, ActionType, ActionCreator, Operation} from "./data";
 import {createAPI} from "../../api";
-import {parseOffers} from "../../adapters/offers";
+import {parseOffers, parseOffer} from "../../adapters/offers";
 import {parseComments} from "../../adapters/comments";
 
 const mockOffers = [
@@ -210,6 +210,29 @@ describe(`Reducer should work correctly`, () => {
       ]
     });
   });
+
+  it(`Reducer should return correct state after changing offer`, () => {
+    expect(reducer(
+        {
+          currentCity: {name: `Hamburg`},
+          cityOffers: new Map()
+            .set(`Hamburg`, [{isBookmarked: false}])
+            .set(`Brussels`, [{isBookmarked: false}]),
+          nearbyOffers: []
+        },
+        {
+          type: ActionType.UPDATE_OFFER,
+          payload: {isBookmarked: true}
+        }
+    ))
+    .toEqual({
+      currentCity: {name: `Hamburg`},
+      cityOffers: new Map()
+        .set(`Hamburg`, [{isBookmarked: true}])
+        .set(`Brussels`, [{isBookmarked: false}]),
+      nearbyOffers: []
+    });
+  });
 });
 
 describe(`Action creators should work correctly`, () => {
@@ -267,6 +290,19 @@ describe(`Action creators should work correctly`, () => {
         {
           type: ActionType.LOAD_NEARBY_OFFERS,
           payload: [{city: {name: `Hamburg`}}, {city: {name: `Brussels`}}]
+        }
+    );
+  });
+
+  it(`Update favorite creator should return correct action`, () => {
+    expect(ActionCreator.updateOffer({}))
+    .toEqual({type: ActionType.UPDATE_OFFER, payload: {}});
+
+    expect(ActionCreator.updateOffer({city: {name: `Hamburg`}, isBookmarked: true}))
+    .toEqual(
+        {
+          type: ActionType.UPDATE_OFFER,
+          payload: {city: {name: `Hamburg`}, isBookmarked: true}
         }
     );
   });
@@ -335,6 +371,21 @@ describe(`Operation should work correctly`, () => {
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith(
           {type: ActionType.LOAD_REVIEWS, payload: parseComments(mockReviews)}
+      );
+    });
+  });
+
+  it(`Should make a correct API call to update offer`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const offerUpdater = Operation.updateFavorite(1, true);
+
+    apiMock.onPost(`/favorite/1/1`).reply(200, mockOffers[0]);
+
+    return offerUpdater(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+          {type: ActionType.UPDATE_OFFER, payload: parseOffer(mockOffers[0])}
       );
     });
   });

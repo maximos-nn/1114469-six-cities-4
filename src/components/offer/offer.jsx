@@ -11,6 +11,8 @@ import {Operation as DataOperation} from "../../reducers/data/data";
 import {getSortedReviews, getNearbyPlaces, getPlaceById} from "../../reducers/data/selectors";
 import {getAuthenticationStatus} from "../../reducers/user/selectors";
 import {AuthenticationStatus} from "../../reducers/user/user";
+import history from "../../history";
+import {AppRoute, Error} from "../../const";
 
 const MAX_PHOTOS_COUNT = 6;
 const MAP_CLASS_NAME = `property__map`;
@@ -31,7 +33,7 @@ class Offer extends PureComponent {
   }
 
   render() {
-    const {card, reviews, nearbyPlaces, onReviewPost, userStatus} = this.props;
+    const {card, reviews, nearbyPlaces, onReviewPost, userStatus, onToggleFavorite} = this.props;
     const {
       title,
       type,
@@ -79,7 +81,18 @@ class Offer extends PureComponent {
                   <h1 className="property__name">
                     {title}
                   </h1>
-                  <button className={`property__bookmark-button ${bookmarkActiveStyle} button`} type="button">
+                  <button
+                    className={`property__bookmark-button ${bookmarkActiveStyle} button`}
+                    type="button"
+                    onClick={() => {
+                      onToggleFavorite(card.id, !isBookmarked)
+                        .catch((error) => {
+                          if (error.response.status === Error.UNAUTHORIZED) {
+                            history.push(AppRoute.SIGNIN);
+                          }
+                        });
+                    }}
+                  >
                     {/* Copy-paste mistake in styles (property.scss, line 124).
                         "place-card__bookmark-icon" added to fix
                      */}
@@ -167,6 +180,7 @@ Offer.propTypes = {
   onReviewsLoad: PropTypes.func.isRequired,
   onNearbyPlacesLoad: PropTypes.func.isRequired,
   onReviewPost: PropTypes.func.isRequired,
+  onToggleFavorite: PropTypes.func.isRequired,
   userStatus: PropTypes.string.isRequired
 };
 
@@ -180,7 +194,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => ({
   onReviewsLoad: (offerId) => dispatch(DataOperation.loadReviews(offerId)),
   onNearbyPlacesLoad: (offerId) => dispatch(DataOperation.loadNearbyOffers(offerId)),
-  onReviewPost: (offerId, review) => dispatch(DataOperation.postReview(offerId, review))
+  onReviewPost: (offerId, review) => dispatch(DataOperation.postReview(offerId, review)),
+  onToggleFavorite: (offerId, isFavorite) => dispatch(DataOperation.updateFavorite(offerId, isFavorite))
 });
 
 export {Offer};

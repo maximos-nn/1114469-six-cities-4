@@ -1,4 +1,4 @@
-import {parseOffers} from "../../adapters/offers";
+import {parseOffers, parseOffer} from "../../adapters/offers";
 import {parseComments} from "../../adapters/comments";
 
 const initialState = {
@@ -12,14 +12,16 @@ const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   CHANGE_CITY: `CHANGE_CITY`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
-  LOAD_NEARBY_OFFERS: `LOAD_NEARBY_OFFERS`
+  LOAD_NEARBY_OFFERS: `LOAD_NEARBY_OFFERS`,
+  UPDATE_OFFER: `UPDATE_OFFER`
 };
 
 const ActionCreator = {
   loadOffers: (offers) => ({type: ActionType.LOAD_OFFERS, payload: offers}),
   changeCity: (city) => ({type: ActionType.CHANGE_CITY, payload: city}),
   loadReviews: (reviews) => ({type: ActionType.LOAD_REVIEWS, payload: reviews}),
-  loadNearbyOffers: (offers) => ({type: ActionType.LOAD_NEARBY_OFFERS, payload: offers})
+  loadNearbyOffers: (offers) => ({type: ActionType.LOAD_NEARBY_OFFERS, payload: offers}),
+  updateOffer: (offer) => ({type: ActionType.UPDATE_OFFER, payload: offer})
 };
 
 const Operation = {
@@ -46,6 +48,12 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.loadNearbyOffers(parseOffers(response.data)));
       });
+  },
+  updateFavorite: (offerId, isFavorite) => (dispatch, getState, api) => {
+    return api.post(`/favorite/${offerId}/${Number(isFavorite)}`)
+      .then((response) => {
+        dispatch(ActionCreator.updateOffer(parseOffer(response.data)));
+      });
   }
 };
 
@@ -66,6 +74,14 @@ const loadOffers = (offers) => {
   return {currentCity, cityOffers};
 };
 
+const updateOfferArray = (offers, newOffer) => {
+  const index = offers.findIndex((offer) => offer.id === newOffer.id);
+  if (index === -1) {
+    return offers;
+  }
+  return [].concat(...offers.slice(0, index), newOffer, ...offers.slice(index + 1));
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.LOAD_OFFERS:
@@ -84,6 +100,20 @@ const reducer = (state = initialState, action) => {
 
     case ActionType.LOAD_NEARBY_OFFERS:
       return Object.assign({}, state, {nearbyOffers: action.payload});
+
+    case ActionType.UPDATE_OFFER:
+      const key = state.currentCity.name;
+      const currentOffers = state.cityOffers.get(key) || [];
+      const newOffers = updateOfferArray(currentOffers, action.payload);
+      const newNearbyOffers = updateOfferArray(state.nearbyOffers, action.payload);
+      return Object.assign(
+          {},
+          state,
+          {
+            cityOffers: new Map(state.cityOffers).set(key, newOffers),
+            nearbyOffers: newNearbyOffers
+          }
+      );
 
     default:
       return state;

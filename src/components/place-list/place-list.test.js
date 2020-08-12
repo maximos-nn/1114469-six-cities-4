@@ -1,5 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import configureStore from "redux-mock-store";
+import {Provider} from "react-redux";
 import PlaceList from "./place-list.jsx";
 import {PlaceType} from "../../const";
 import {Router} from "react-router-dom";
@@ -8,6 +10,8 @@ import history from "../../history.js";
 const LIST_CLASS_NAME = `cities__places-list tabs__content`;
 const CARD_CLASS_NAME = `cities__place-card`;
 const IMAGE_WRAPPER_CLASS_NAME = `cities__image-wrapper`;
+
+const mockStore = configureStore([]);
 
 const offers = [
   {
@@ -97,20 +101,23 @@ const offers = [
 ];
 
 it(`Render place list`, () => {
+  const store = mockStore({});
   const tree = renderer.create(
-      <Router history={history}>
-        <PlaceList
-          cardClass={CARD_CLASS_NAME}
-          imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
-          listClass={LIST_CLASS_NAME}
-          places={offers}
-          events={{
-            onCardMouseEnter: () => {},
-            onCardMouseLeave: () => {},
-            onBookmarkButtonClick: () => {}
-          }}
-        />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <PlaceList
+            cardClass={CARD_CLASS_NAME}
+            imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
+            listClass={LIST_CLASS_NAME}
+            places={offers}
+            events={{
+              onCardMouseEnter: () => {},
+              onCardMouseLeave: () => {},
+              onBookmarkButtonClick: () => {}
+            }}
+          />
+        </Router>
+      </Provider>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
