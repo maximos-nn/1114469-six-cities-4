@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import {placeCardType} from "../prop-types";
 import {calcRatingBarWidth} from "../../utils";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../const";
 
 const PlaceCard = (props) => {
   const {card, events, cardClass, imageWrapperClass} = props;
-  const {onCardMouseEnter, onCardMouseLeave, onBookmarkButtonClick, onPlaceTitleClick} = events;
+  const {onCardMouseEnter, onCardMouseLeave, onBookmarkButtonClick} = events;
   const {title, type, picture, price, rating, isBookmarked, isPremium} = card;
   const bookmarkActiveStyle = isBookmarked ? `place-card__bookmark-button--active` : ``;
   const ratingBarWidth = calcRatingBarWidth(rating);
@@ -46,10 +48,7 @@ const PlaceCard = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#" onClick={(evt) => {
-            evt.preventDefault();
-            onPlaceTitleClick(card);
-          }}>{title}</a>
+          <Link to={`${AppRoute.OFFER}/${card.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -63,7 +62,6 @@ PlaceCard.propTypes = {
     onCardMouseEnter: PropTypes.func.isRequired,
     onCardMouseLeave: PropTypes.func.isRequired,
     onBookmarkButtonClick: PropTypes.func.isRequired,
-    onPlaceTitleClick: PropTypes.func.isRequired
   }).isRequired,
   cardClass: PropTypes.string.isRequired,
   imageWrapperClass: PropTypes.string.isRequired

@@ -2,6 +2,7 @@ import MockAdapter from "axios-mock-adapter";
 import {reducer, ActionType, ActionCreator, Operation} from "./data";
 import {createAPI} from "../../api";
 import {parseOffers} from "../../adapters/offers";
+import {parseComments} from "../../adapters/comments";
 
 const mockOffers = [
   {
@@ -40,13 +41,30 @@ const mockOffers = [
   }
 ];
 
+const mockReviews = [
+  {
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    date: `2019-05-08T14:13:56.569Z`,
+    id: 1,
+    rating: 4,
+    user: {
+      [`avatar_url`]: `img/1.png`,
+      id: 4,
+      [`is_pro`]: false,
+      name: `Max`
+    }
+  }
+];
+
 const api = createAPI(() => {});
 
 describe(`Reducer should work correctly`, () => {
   it(`Reducer without parameters should return initial state`, () => {
     expect(reducer(void 0, {})).toEqual({
       currentCity: {},
-      cityOffers: new Map()
+      cityOffers: new Map(),
+      reviews: [],
+      nearbyOffers: []
     });
   });
 
@@ -54,7 +72,9 @@ describe(`Reducer should work correctly`, () => {
     expect(reducer(void 0, {type: ActionType.LOAD_OFFERS, payload: []}))
     .toEqual({
       currentCity: {},
-      cityOffers: new Map()
+      cityOffers: new Map(),
+      reviews: [],
+      nearbyOffers: []
     });
   });
 
@@ -74,7 +94,9 @@ describe(`Reducer should work correctly`, () => {
       currentCity: {name: `Amsterdam`},
       cityOffers: new Map()
         .set(`Amsterdam`, [{city: {name: `Amsterdam`}}, {city: {name: `Amsterdam`}}])
-        .set(`Paris`, [{city: {name: `Paris`}}])
+        .set(`Paris`, [{city: {name: `Paris`}}]),
+      reviews: [],
+      nearbyOffers: []
     });
 
     expect(reducer(
@@ -140,6 +162,54 @@ describe(`Reducer should work correctly`, () => {
         .set(`Brussels`, [{city: {name: `Brussels`}}])
     });
   });
+
+  it(`Reducer should return correct state after loading reviews`, () => {
+    expect(reducer(
+        void 0,
+        {
+          type: ActionType.LOAD_REVIEWS,
+          payload: [
+            {rating: 1, comment: `comment1`},
+            {rating: 2, comment: `comment2`},
+            {rating: 3, comment: `comment3`}
+          ]
+        }
+    ))
+    .toEqual({
+      currentCity: {},
+      cityOffers: new Map(),
+      reviews: [
+        {rating: 1, comment: `comment1`},
+        {rating: 2, comment: `comment2`},
+        {rating: 3, comment: `comment3`}
+      ],
+      nearbyOffers: []
+    });
+  });
+
+  it(`Reducer should return correct state after loading nearby offers`, () => {
+    expect(reducer(
+        void 0,
+        {
+          type: ActionType.LOAD_NEARBY_OFFERS,
+          payload: [
+            {city: {name: `Amsterdam`}},
+            {city: {name: `Paris`}},
+            {city: {name: `Amsterdam`}}
+          ]
+        }
+    ))
+    .toEqual({
+      currentCity: {},
+      cityOffers: new Map(),
+      reviews: [],
+      nearbyOffers: [
+        {city: {name: `Amsterdam`}},
+        {city: {name: `Paris`}},
+        {city: {name: `Amsterdam`}}
+      ]
+    });
+  });
 });
 
 describe(`Action creators should work correctly`, () => {
@@ -168,6 +238,38 @@ describe(`Action creators should work correctly`, () => {
         }
     );
   });
+
+  it(`Load reviews creator should return correct action`, () => {
+    expect(ActionCreator.loadReviews([]))
+    .toEqual({type: ActionType.LOAD_REVIEWS, payload: []});
+
+    expect(ActionCreator.loadReviews([
+      {rating: 2, comment: `comment1`},
+      {rating: 4, comment: `comment2`}
+    ]))
+    .toEqual(
+        {
+          type: ActionType.LOAD_REVIEWS,
+          payload: [
+            {rating: 2, comment: `comment1`},
+            {rating: 4, comment: `comment2`}
+          ]
+        }
+    );
+  });
+
+  it(`Load nearby offers creator should return correct action`, () => {
+    expect(ActionCreator.loadNearbyOffers([]))
+    .toEqual({type: ActionType.LOAD_NEARBY_OFFERS, payload: []});
+
+    expect(ActionCreator.loadNearbyOffers([{city: {name: `Hamburg`}}, {city: {name: `Brussels`}}]))
+    .toEqual(
+        {
+          type: ActionType.LOAD_NEARBY_OFFERS,
+          payload: [{city: {name: `Hamburg`}}, {city: {name: `Brussels`}}]
+        }
+    );
+  });
 });
 
 describe(`Operation should work correctly`, () => {
@@ -182,6 +284,57 @@ describe(`Operation should work correctly`, () => {
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith(
           {type: ActionType.LOAD_OFFERS, payload: parseOffers(mockOffers)}
+      );
+    });
+  });
+
+  it(`Should make a correct API call to get nearby offers`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const hotelsLoader = Operation.loadNearbyOffers(123);
+
+    apiMock.onGet(`/hotels/123/nearby`).reply(200, mockOffers);
+
+    return hotelsLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+          {type: ActionType.LOAD_NEARBY_OFFERS, payload: parseOffers(mockOffers)}
+      );
+    });
+  });
+
+  it(`Should make a correct API call to get reviews`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const reviewsLoader = Operation.loadReviews(321);
+
+    apiMock.onGet(`/comments/321`).reply(200, mockReviews);
+
+    return reviewsLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+          {type: ActionType.LOAD_REVIEWS, payload: parseComments(mockReviews)}
+      );
+    });
+  });
+
+  it(`Should make a correct API call to post review`, () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const reviewLoader = Operation.postReview(
+        1,
+        {
+          comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+          rating: 4
+        }
+    );
+
+    apiMock.onPost(`/comments/1`).reply(200, mockReviews);
+
+    return reviewLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+          {type: ActionType.LOAD_REVIEWS, payload: parseComments(mockReviews)}
       );
     });
   });

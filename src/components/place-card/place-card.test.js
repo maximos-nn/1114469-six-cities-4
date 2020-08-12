@@ -2,6 +2,8 @@ import React from "react";
 import renderer from "react-test-renderer";
 import PlaceCard from "./place-card.jsx";
 import {PlaceType} from "../../const";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const CARD_CLASS_NAME = `cities__place-card`;
 const IMAGE_WRAPPER_CLASS_NAME = `cities__image-wrapper`;
@@ -37,16 +39,17 @@ const card = {
 
 it(`Should render place card correctly`, () => {
   const tree = renderer.create(
-      <PlaceCard
-        cardClass={CARD_CLASS_NAME}
-        imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
-        card={card}
-        events={{
-          onCardMouseEnter: () => {},
-          onCardMouseLeave: () => {},
-          onBookmarkButtonClick: () => {},
-          onPlaceTitleClick: () => {}
-        }} />
+      <Router history={history}>
+        <PlaceCard
+          cardClass={CARD_CLASS_NAME}
+          imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
+          card={card}
+          events={{
+            onCardMouseEnter: () => {},
+            onCardMouseLeave: () => {},
+            onBookmarkButtonClick: () => {},
+          }} />
+      </Router>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });

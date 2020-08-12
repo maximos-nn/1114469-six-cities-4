@@ -5,6 +5,8 @@ import configureStore from "redux-mock-store";
 import {App} from "./app.jsx";
 import {PlaceType} from "../../const";
 import {AuthenticationStatus} from "../../reducers/user/user.js";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -86,7 +88,9 @@ it(`Render App`, () => {
   const store = mockStore(storeObj);
   const tree = renderer.create(
       <Provider store={store} >
-        <App places={offers} city={`Amsterdam`} reviews={[]} nearbyPlaces={[]} onPlaceTitleClick={() => {}} />
+        <Router history={history}>
+          <App places={offers} city={`Amsterdam`} />
+        </Router>
       </Provider>,
       {createNodeMock: () => document.createElement(`div`)}
   ).toJSON();

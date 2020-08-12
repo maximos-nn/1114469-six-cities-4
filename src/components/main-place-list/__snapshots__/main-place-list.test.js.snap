@@ -96,7 +96,7 @@ exports[`Render main place list 1`] = `
         className="place-card__name"
       >
         <a
-          href="#"
+          href="/offer/12"
           onClick={[Function]}
         >
           Beautiful & luxurious apartment at great location
@@ -194,7 +194,7 @@ exports[`Render main place list 1`] = `
         className="place-card__name"
       >
         <a
-          href="#"
+          href="/offer/32"
           onClick={[Function]}
         >
           Canal View Prinsengracht
@@ -299,7 +299,7 @@ exports[`Render main place list 1`] = `
         className="place-card__name"
       >
         <a
-          href="#"
+          href="/offer/42"
           onClick={[Function]}
         >
           Nice, cozy, warm big bed apartment

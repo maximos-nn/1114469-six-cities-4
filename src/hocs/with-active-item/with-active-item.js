@@ -7,7 +7,7 @@ const withActiveItem = (Component) => {
 
       this.state = {activeItem: null};
 
-      this._onItemChange = this._onItemChange.bind(this);
+      this._handleItemChange = this._handleItemChange.bind(this);
     }
 
     render() {
@@ -15,12 +15,12 @@ const withActiveItem = (Component) => {
         <Component
           {...this.props}
           activeItem={this.state.activeItem}
-          onActiveItemChange={this._onItemChange}
+          onActiveItemChange={this._handleItemChange}
         />
       );
     }
 
-    _onItemChange(item) {
+    _handleItemChange(item) {
       this.setState({activeItem: item});
     }
   }

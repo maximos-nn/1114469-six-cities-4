@@ -23,7 +23,7 @@ exports[`Render Main component 1`] = `
               alt="6 cities logo"
               className="header__logo"
               height="41"
-              src="img/logo.svg"
+              src="/img/logo.svg"
               width="81"
             />
           </a>
@@ -253,7 +253,7 @@ exports[`Render Main component 1`] = `
                   className="place-card__name"
                 >
                   <a
-                    href="#"
+                    href="/offer/33"
                     onClick={[Function]}
                   >
                     Canal View Prinsengracht
@@ -358,7 +358,7 @@ exports[`Render Main component 1`] = `
                   className="place-card__name"
                 >
                   <a
-                    href="#"
+                    href="/offer/44"
                     onClick={[Function]}
                   >
                     Nice, cozy, warm big bed apartment

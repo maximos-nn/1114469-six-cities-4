@@ -17,7 +17,7 @@ const parseOffers = (rawOffers) => {
     host: {
       id: offer.host.id,
       name: offer.host.name,
-      avatar: offer.host.avatar_url,
+      avatar: `/${offer.host.avatar_url}`,
       isSuper: offer.host.is_pro
     },
     photos: offer.images,

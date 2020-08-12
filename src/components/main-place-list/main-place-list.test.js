@@ -2,6 +2,8 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {MainPlaceList} from "./main-place-list.jsx";
 import {PlaceType, SortType} from "../../const";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const offers = [
   {
@@ -92,16 +94,17 @@ const offers = [
 
 it(`Render main place list`, () => {
   const tree = renderer.create(
-      <MainPlaceList
-        places={offers}
-        sortType={SortType.POPULAR}
-        events={{
-          onCardMouseEnter: () => {},
-          onCardMouseLeave: () => {},
-          onPlaceTitleClick: () => {},
-          onBookmarkButtonClick: () => {}
-        }}
-      />
+      <Router history={history}>
+        <MainPlaceList
+          places={offers}
+          sortType={SortType.POPULAR}
+          events={{
+            onCardMouseEnter: () => {},
+            onCardMouseLeave: () => {},
+            onBookmarkButtonClick: () => {}
+          }}
+        />
+      </Router>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });

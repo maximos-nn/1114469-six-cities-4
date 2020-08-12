@@ -12,7 +12,6 @@ const NearbyPlaceList = (props) => {
       imageWrapperClass={IMAGE_WRAPPER_CLASS_NAME}
       listClass={LIST_CLASS_NAME}
       events={{
-        onPlaceTitleClick: () => {},
         onBookmarkButtonClick: () => {},
         onCardMouseEnter: () => {},
         onCardMouseLeave: () => {}
