@@ -146,7 +146,7 @@ class Offer extends PureComponent {
                 />
               </div>
             </div>
-            <Map mapClass={MAP_CLASS_NAME} activeItem={card} />
+            <Map mapClass={MAP_CLASS_NAME} places={nearbyPlaces.concat(card)} activeItem={card} />
           </section>
           <div className="container">
             <section className="near-places places">

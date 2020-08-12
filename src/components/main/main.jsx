@@ -59,7 +59,7 @@ class Main extends PureComponent {
               <div className="cities__right-section">
                 {
                   count &&
-                  <Map mapClass={MAP_CLASS_NAME} activeItem={activeItem} />
+                  <Map mapClass={MAP_CLASS_NAME} places={places} activeItem={activeItem} />
                 }
               </div>
             </div>
