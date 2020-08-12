@@ -1,9 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import configureStore from "redux-mock-store";
+import {Provider} from "react-redux";
 import NearbyPlaceList from "./nearby-place-list.jsx";
 import {PlaceType} from "../../const";
 import {Router} from "react-router-dom";
 import history from "../../history.js";
+
+const mockStore = configureStore([]);
 
 const offers = [
   {
@@ -93,13 +97,16 @@ const offers = [
 ];
 
 it(`Render nearby place list`, () => {
+  const store = mockStore({});
   const tree = renderer.create(
-      <Router history={history}>
-        <NearbyPlaceList
-          places={offers}
-          onBookmarkButtonClick={() => {}}
-        />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <NearbyPlaceList
+            places={offers}
+            onBookmarkButtonClick={() => {}}
+          />
+        </Router>
+      </Provider>
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });

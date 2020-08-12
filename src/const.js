@@ -20,4 +20,8 @@ const AppRoute = {
   OFFER: `/offer`
 };
 
-export {PERCENTS_PER_RATING_POINT, PlaceType, SortType, AppRoute};
+const Error = {
+  UNAUTHORIZED: 401
+};
+
+export {PERCENTS_PER_RATING_POINT, PlaceType, SortType, AppRoute, Error};

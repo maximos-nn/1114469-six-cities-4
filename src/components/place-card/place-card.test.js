@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import PlaceCard from "./place-card.jsx";
+import {PlaceCard} from "./place-card.jsx";
 import {PlaceType} from "../../const";
 import {Router} from "react-router-dom";
 import history from "../../history.js";

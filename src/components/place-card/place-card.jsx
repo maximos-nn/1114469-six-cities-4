@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import {placeCardType} from "../prop-types";
 import {calcRatingBarWidth} from "../../utils";
 import {Link} from "react-router-dom";
-import {AppRoute} from "../../const";
+import {AppRoute, Error} from "../../const";
+import history from "../../history";
+import {connect} from "react-redux";
+import {Operation as DataOperation} from "../../reducers/data/data";
 
 const PlaceCard = (props) => {
-  const {card, events, cardClass, imageWrapperClass} = props;
-  const {onCardMouseEnter, onCardMouseLeave, onBookmarkButtonClick} = events;
+  const {card, events, cardClass, imageWrapperClass, onToggleFavorite} = props;
+  const {onCardMouseEnter, onCardMouseLeave} = events;
   const {title, type, picture, price, rating, isBookmarked, isPremium} = card;
   const bookmarkActiveStyle = isBookmarked ? `place-card__bookmark-button--active` : ``;
   const ratingBarWidth = calcRatingBarWidth(rating);
@@ -34,7 +37,18 @@ const PlaceCard = (props) => {
             <b className="place-card__price-value">{`€${price}`}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${bookmarkActiveStyle}`} type="button" onClick={onBookmarkButtonClick}>
+          <button
+            className={`place-card__bookmark-button button ${bookmarkActiveStyle}`}
+            type="button"
+            onClick={() => {
+              onToggleFavorite(card.id, !isBookmarked)
+                .catch((error) => {
+                  if (error.response.status === Error.UNAUTHORIZED) {
+                    history.push(AppRoute.SIGNIN);
+                  }
+                });
+            }}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -61,10 +75,15 @@ PlaceCard.propTypes = {
   events: PropTypes.shape({
     onCardMouseEnter: PropTypes.func.isRequired,
     onCardMouseLeave: PropTypes.func.isRequired,
-    onBookmarkButtonClick: PropTypes.func.isRequired,
   }).isRequired,
+  onToggleFavorite: PropTypes.func.isRequired,
   cardClass: PropTypes.string.isRequired,
   imageWrapperClass: PropTypes.string.isRequired
 };
 
-export default PlaceCard;
+const mapDispatchToProps = (dispatch) => ({
+  onToggleFavorite: (offerId, isFavorite) => dispatch(DataOperation.updateFavorite(offerId, isFavorite))
+});
+
+export {PlaceCard};
+export default connect(null, mapDispatchToProps)(PlaceCard);

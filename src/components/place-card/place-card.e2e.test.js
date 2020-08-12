@@ -1,7 +1,7 @@
 import React from "react";
 import {configure, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import PlaceCard from "./place-card.jsx";
+import {PlaceCard} from "./place-card.jsx";
 import {PlaceType} from "../../const";
 import {Router} from "react-router-dom";
 import history from "../../history.js";
