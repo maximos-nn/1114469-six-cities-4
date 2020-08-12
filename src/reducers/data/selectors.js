@@ -60,6 +60,13 @@ const getSortedReviews = createSelector(
 
 const getNearbyPlaces = (state) => state[NAME_SPACE].nearbyOffers.slice(0, MAX_NEARBY_PLACE_COUNT) || [];
 
+const getFavorites = (state) => state[NAME_SPACE].favorites || [];
+
+const getFavoriteCities = createSelector(
+    getFavorites,
+    (offers) => Array.from(new Set(offers.map((offer) => offer.city.name)))
+);
+
 export {
   getCurrentPlaces,
   getPlaceById,
@@ -69,5 +76,7 @@ export {
   getCurrentCityZoom,
   getSortedPlaces,
   getSortedReviews,
-  getNearbyPlaces
+  getNearbyPlaces,
+  getFavorites,
+  getFavoriteCities
 };

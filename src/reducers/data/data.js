@@ -5,7 +5,8 @@ const initialState = {
   currentCity: {},
   cityOffers: new Map(),
   reviews: [],
-  nearbyOffers: []
+  nearbyOffers: [],
+  favorites: []
 };
 
 const ActionType = {
@@ -13,7 +14,8 @@ const ActionType = {
   CHANGE_CITY: `CHANGE_CITY`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   LOAD_NEARBY_OFFERS: `LOAD_NEARBY_OFFERS`,
-  UPDATE_OFFER: `UPDATE_OFFER`
+  UPDATE_OFFER: `UPDATE_OFFER`,
+  LOAD_FAVORITES: `LOAD_FAVORITES`
 };
 
 const ActionCreator = {
@@ -21,7 +23,8 @@ const ActionCreator = {
   changeCity: (city) => ({type: ActionType.CHANGE_CITY, payload: city}),
   loadReviews: (reviews) => ({type: ActionType.LOAD_REVIEWS, payload: reviews}),
   loadNearbyOffers: (offers) => ({type: ActionType.LOAD_NEARBY_OFFERS, payload: offers}),
-  updateOffer: (offer) => ({type: ActionType.UPDATE_OFFER, payload: offer})
+  updateOffer: (offer) => ({type: ActionType.UPDATE_OFFER, payload: offer}),
+  loadFavorites: (offers) => ({type: ActionType.LOAD_FAVORITES, payload: offers})
 };
 
 const Operation = {
@@ -53,6 +56,12 @@ const Operation = {
     return api.post(`/favorite/${offerId}/${Number(isFavorite)}`)
       .then((response) => {
         dispatch(ActionCreator.updateOffer(parseOffer(response.data)));
+      });
+  },
+  loadFavorites: () => (dispatch, getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.loadFavorites(parseOffers(response.data)));
       });
   }
 };
@@ -114,6 +123,9 @@ const reducer = (state = initialState, action) => {
             nearbyOffers: newNearbyOffers
           }
       );
+
+    case ActionType.LOAD_FAVORITES:
+      return Object.assign({}, state, {favorites: action.payload});
 
     default:
       return state;

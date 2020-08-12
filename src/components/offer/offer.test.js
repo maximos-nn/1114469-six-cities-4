@@ -161,6 +161,7 @@ it(`Should render place card details correctly`, () => {
             onReviewsLoad={() => {}}
             onNearbyPlacesLoad={() => {}}
             onReviewPost={() => {}}
+            onToggleFavorite={() => {}}
             userStatus={`AUTH`}
           />
         </Router>

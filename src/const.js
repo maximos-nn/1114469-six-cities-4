@@ -17,7 +17,8 @@ const SortType = {
 const AppRoute = {
   ROOT: `/`,
   SIGNIN: `/login`,
-  OFFER: `/offer`
+  OFFER: `/offer`,
+  FAVORITES: `/favorites`
 };
 
 const Error = {
